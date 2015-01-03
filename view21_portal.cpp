@@ -837,6 +837,35 @@ int view21_portal_initResources()
     uniform_v_inv = get_uniform(view21_portal_program, uniform_name);
 }
 
+void view21onMouse(int button, int state, int x, int y)
+{
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        view21_arcball_on = true;
+        view21_last_mx = view21_cur_mx = x;
+        view21_last_my = view21_cur_my = y;
+    } else {
+        view21_arcball_on = false;
+    }
+}
+
+void view21onMotion(int x, int y)
+{
+    // if left button is pressed
+    if (view21_arcball_on) {
+        view21_cur_mx = x;
+        view21_cur_my = y;
+    }
+}
+
+void view21onReshape(int width, int height)
+{
+    screen_width = width;
+    screen_height = height;
+    glViewport(0, 0, screen_width, screen_height);
+    create_portal(&portals[0], screen_width, screen_height, zNear, fovy);
+    create_portal(&portals[1], screen_width, screen_height, zNear, fovy);
+}
+
 void view21_portal_freeResources()
 {
     glDeleteProgram(view21_portal_program);

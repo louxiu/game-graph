@@ -450,6 +450,13 @@ int initWindow(int argc, char *argv[])
     win_array[20].entry = viewEntry;
     win_array[20].init = view21_portal_initResources;
     win_array[20].free = view21_portal_freeResources;
+    win_array[20].reshape = view21onReshape;
+    win_array[20].motion = view21onMotion;
+    win_array[20].last_mx = &view21_last_mx;
+    win_array[20].last_my = &view21_last_my;
+    win_array[20].cur_mx = &view21_cur_mx;
+    win_array[20].cur_my = &view21_cur_my;
+    win_array[20].arcball_on = &view21_arcball_on;
 
     for(int i = 0; i < SUB_WINDOW_COL * SUB_WINDOW_ROW; ++i){
         if (win_array[i].init == NULL){
