@@ -5,8 +5,8 @@
 #include "global.h"
 
 GLuint view7_suzanne_program = 0;
-int last_mx = 0, last_my = 0, cur_mx = 0, cur_my = 0;
-bool arcball_on = 0;
+static int last_mx = 0, last_my = 0, cur_mx = 0, cur_my = 0;
+static bool arcball_on = 0;
 
 // TODO: draw lighting box
 // TODO: add function of lighting mode

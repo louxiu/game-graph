@@ -73,9 +73,6 @@ struct Window {
 // SUB_WINDOW_COL * SUB_WINDOW_ROW
 struct Window win_array[SUB_WINDOW_COL * SUB_WINDOW_ROW];
 
-GLuint test_program = 0;
-GLint test_attr_coord2d = -1;
-
 // TODO: add background, bbox, light
 // TODO: add quad view
 // TODO: reshape func

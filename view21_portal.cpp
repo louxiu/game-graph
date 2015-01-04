@@ -4,9 +4,10 @@
 #include "util.h"
 
 GLuint view21_portal_program = 0;
-int view21_last_mx = 0, view21_last_my = 0,
-    view21_cur_mx = 0, view21_cur_my = 0;
-bool view21_arcball_on = 0;
+
+static int last_mx = 0, last_my = 0,
+    cur_mx = 0, cur_my = 0;
+static bool arcball_on = 0;
 
 Mesh main_mesh, ground_mesh, light_bbox_mesh;
 Mesh portals[2];
@@ -15,7 +16,7 @@ static unsigned int last_ticks = 0;
 // TODO: change with fullscreen, consider other view
 unsigned int screen_width = SUB_WINDOW_WIDTH, screen_height = SUB_WINDOW_HEIGHT;
 
-struct rect { int x,y,w,h; };
+struct rect {int x,y,w,h;};
 int rotY_direction = 0, rotX_direction = 0, transZ_direction = 0, strife = 0;
 float speed_factor = 1;
 
@@ -23,12 +24,13 @@ float speed_factor = 1;
 
 static float zNear = 0.01;
 static float fovy = 45;
+
 GLint attr_v_coord;
 GLint attr_v_normal;
 GLint uniform_m, uniform_v, uniform_p;
 GLint uniform_m_3x3_inv_transp, uniform_v_inv;
 
-enum MODES { MODE_OBJECT, MODE_CAMERA, MODE_LIGHT, MODE_LAST }
+enum MODES {MODE_OBJECT, MODE_CAMERA, MODE_LIGHT, MODE_LAST}
     view_mode = MODE_CAMERA;
 glm::mat4 transforms[MODE_LAST];
 
@@ -47,7 +49,8 @@ void init_view()
     //   glm::vec3( 0.0,  1.0,  0.0));  // up
 }
 
-void create_portal(Mesh* portal, int screen_width, int screen_height,
+void create_portal(Mesh* portal,
+                   int screen_width, int screen_height,
                    float zNear, float fovy)
 {
     portal->vertices.clear();
@@ -73,7 +76,7 @@ void create_portal(Mesh* portal, int screen_width, int screen_height,
     };
 
     for (unsigned int i = 0; i < sizeof(portal_vertices)
-             /sizeof(portal_vertices[0]); i++) {
+             / sizeof(portal_vertices[0]); i++) {
         portal->vertices.push_back(portal_vertices[i]);
     }
 
@@ -238,9 +241,9 @@ void view21_logic()
 
     // TODO: make handle arcball as generic function
     /* Handle arcball */
-    if (view21_cur_mx != view21_last_mx || view21_cur_my != view21_last_my) {
-        glm::vec3 va = get_arcball_vector(view21_last_mx, view21_last_my);
-        glm::vec3 vb = get_arcball_vector( view21_cur_mx,  view21_cur_my);
+    if (cur_mx != last_mx || cur_my != last_my) {
+        glm::vec3 va = get_arcball_vector(last_mx, last_my);
+        glm::vec3 vb = get_arcball_vector( cur_mx,  cur_my);
         float angle = acos(min(1.0f, glm::dot(va, vb)));
         glm::vec3 axis_in_camera_coord = glm::cross(va, vb);
         glm::mat3 camera2object =
@@ -250,8 +253,8 @@ void view21_logic()
         main_mesh.object2world =
             glm::rotate(main_mesh.object2world, angle, axis_in_object_coord);
 
-        view21_last_mx = view21_cur_mx;
-        view21_last_my = view21_cur_my;
+        last_mx = cur_mx;
+        last_my = cur_my;
     }
 
     // Model
@@ -800,11 +803,13 @@ int view21_portal_initResources()
     create_portal(&portals[0], screen_width, screen_height, zNear, fovy);
     create_portal(&portals[1], screen_width, screen_height, zNear, fovy);
 
+    // 90° angle + slightly higher
     portals[0].object2world = glm::translate(glm::mat4(1), glm::vec3(0, 1, -2));
     portals[1].object2world = glm::rotate(glm::mat4(1), glm::radians(-90.0f),
                                           glm::vec3(0, 1, 0))
         * glm::translate(glm::mat4(1), glm::vec3(0, 1.2, -2));
 
+    // main mesh is the cube mesh
     main_mesh.upload();
     ground_mesh.upload();
     light_bbox_mesh.upload();
@@ -835,25 +840,34 @@ int view21_portal_initResources()
 
     uniform_name = "v_inv";
     uniform_v_inv = get_uniform(view21_portal_program, uniform_name);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_CULL_FACE);
+    // Make bounding box clearer against the ground:
+    glEnable(GL_POLYGON_OFFSET_FILL);
+    glPolygonOffset(1, 0);
 }
 
 void view21onMouse(int button, int state, int x, int y)
 {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        view21_arcball_on = true;
-        view21_last_mx = view21_cur_mx = x;
-        view21_last_my = view21_cur_my = y;
+        arcball_on = true;
+        last_mx = cur_mx = x;
+        last_my = cur_my = y;
     } else {
-        view21_arcball_on = false;
+        arcball_on = false;
     }
 }
 
 void view21onMotion(int x, int y)
 {
     // if left button is pressed
-    if (view21_arcball_on) {
-        view21_cur_mx = x;
-        view21_cur_my = y;
+    if (arcball_on) {
+        cur_mx = x;
+        cur_my = y;
     }
 }
 
