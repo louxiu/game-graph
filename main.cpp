@@ -56,6 +56,7 @@ struct Window {
     GLuint x, y, width, height;
     void (*display)();
     void (*mouse)(int button, int state, int x, int y);
+    void (*internalMouse)(int button, int state, int x, int y);
     void (*entry)(int state);
     int  (*init)();
     void (*idle)();
@@ -67,8 +68,6 @@ struct Window {
     void (*free)();
     bool cull_face;
     GLuint program;
-    int *last_mx, *last_my, *cur_mx, *cur_my;
-    bool *arcball_on;
 };
 
 // SUB_WINDOW_COL * SUB_WINDOW_ROW
@@ -184,25 +183,8 @@ void viewMouse(int button, int state, int x, int y)
         }
     }
 
-    // TODO: mv mouse handle to itself, do not expose the last_mx extra
-    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-        *win_array[index].arcball_on = true;
-        *win_array[index].last_mx = *win_array[index].cur_mx = x;
-        *win_array[index].last_my = *win_array[index].cur_my = y;
-    } else {
-        *win_array[index].arcball_on = false;
-    }
-
-    if (index == 18){
-        view19Mouse(button, state, x, y);
-        return;
-    }
-
-    if (index == 19){
-        if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-            view20_dice_roll = !view20_dice_roll;
-            return;
-        }
+    if (win_array[index].internalMouse != NULL){
+        win_array[index].internalMouse(button, state, x, y);
     }
 }
 
@@ -284,14 +266,9 @@ int initWindow(int argc, char *argv[])
             win_array[winNum].keyboard = NULL;
             win_array[winNum].motion = NULL;
             win_array[winNum].mouse = viewMouse;
+            win_array[winNum].internalMouse = NULL;
             win_array[winNum].cull_face = false;
             win_array[winNum].program = 0;
-
-            win_array[winNum].last_mx = NULL;
-            win_array[winNum].last_my = NULL;
-            win_array[winNum].cur_mx = NULL;
-            win_array[winNum].cur_my = NULL;
-            win_array[winNum].arcball_on = NULL;
         }
     }
 
@@ -344,11 +321,7 @@ int initWindow(int argc, char *argv[])
     win_array[6].specialUp = view7SuzanneSpecialUp;
     win_array[6].keyboard = view7SuzanneKeyboard;
     win_array[6].motion = view7SuzanneMotion;
-    win_array[6].last_mx = &view7_last_mx;
-    win_array[6].last_my = &view7_last_my;
-    win_array[6].cur_mx = &view7_cur_mx;
-    win_array[6].cur_my = &view7_cur_my;
-    win_array[6].arcball_on = &view7_arcball_on;
+    win_array[6].internalMouse = view7SuzanneMouse;
 
     win_array[7].program = view8_program;
     win_array[7].display = view8Display;
@@ -441,6 +414,7 @@ int initWindow(int argc, char *argv[])
     win_array[19].program = view20_dice_program;
     win_array[19].display = view20Display;
     win_array[19].entry = viewEntry;
+    win_array[19].internalMouse = view20Mouse;
     win_array[19].init = view20_initResources;
     win_array[19].free = view20_dice_freeResources;
     win_array[19].cull_face = true;
@@ -452,11 +426,6 @@ int initWindow(int argc, char *argv[])
     win_array[20].free = view21_portal_freeResources;
     win_array[20].reshape = view21onReshape;
     win_array[20].motion = view21onMotion;
-    win_array[20].last_mx = &view21_last_mx;
-    win_array[20].last_my = &view21_last_my;
-    win_array[20].cur_mx = &view21_cur_mx;
-    win_array[20].cur_my = &view21_cur_my;
-    win_array[20].arcball_on = &view21_arcball_on;
 
     for(int i = 0; i < SUB_WINDOW_COL * SUB_WINDOW_ROW; ++i){
         if (win_array[i].init == NULL){

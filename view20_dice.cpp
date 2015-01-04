@@ -32,7 +32,7 @@ unsigned char *view20_dice_texture = NULL;
 GLuint view20_dice_tbo_texture = 0, view20_dice_vbo_texture = 0,
     view20_dice_vbo = 0, view20_dice_ibo = 0;
 
-bool view20_dice_roll = true;
+bool dice_roll = true;
 // NOTE: picture size 490x490,
 // rectangle: 56, 26
 // boarder width: 16
@@ -254,6 +254,14 @@ int view20_initResources()
     return 0;
 }
 
+void view20Mouse(int button, int state, int x, int y)
+{
+    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+        dice_roll = !dice_roll;
+        return;
+    }
+}
+
 void view20Display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -299,7 +307,7 @@ void view20Display()
         glm::rotate(glm::mat4(1.0f), angle*3.0f, glm::vec3(0, 1, 0)) *
         glm::rotate(glm::mat4(1.0f), angle*3.0f, glm::vec3(0, 0, 1));
 
-    if (!view20_dice_roll){
+    if (!dice_roll){
         anim = glm::mat4(1.0f);
     }
 

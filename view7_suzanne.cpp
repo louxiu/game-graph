@@ -5,8 +5,8 @@
 #include "global.h"
 
 GLuint view7_suzanne_program = 0;
-int view7_last_mx = 0, view7_last_my = 0, view7_cur_mx = 0, view7_cur_my = 0;
-bool view7_arcball_on = 0;
+int last_mx = 0, last_my = 0, cur_mx = 0, cur_my = 0;
+bool arcball_on = 0;
 
 // TODO: draw lighting box
 // TODO: add function of lighting mode
@@ -203,9 +203,9 @@ void view7SuzanneLogic()
     // TODO: read opengl wikibooks Tutorial_drafts
     // TODO: arcball does not work properly. angle is too small.
     // Handle arcball
-    if (view7_cur_mx != view7_last_mx || view7_cur_my != view7_last_my) {
-        glm::vec3 va = get_arcball_vector(view7_last_mx, view7_last_my);
-        glm::vec3 vb = get_arcball_vector(view7_cur_mx, view7_cur_my);
+    if (cur_mx != last_mx || cur_my != last_my) {
+        glm::vec3 va = get_arcball_vector(last_mx, last_my);
+        glm::vec3 vb = get_arcball_vector(cur_mx, cur_my);
         float angle = acos(min(1.0f, glm::dot(va, vb)));
         glm::vec3 axis_in_camera_coord = glm::cross(va, vb);
         glm::mat3 camera2object =
@@ -217,8 +217,8 @@ void view7SuzanneLogic()
             glm::rotate(view7_suzanne_mesh.object2world,
                         angle, axis_in_object_coord);
 
-        view7_last_mx = view7_cur_mx;
-        view7_last_my = view7_cur_my;
+        last_mx = cur_mx;
+        last_my = cur_my;
 
         // cout << "angle: " << angle
         //      << "coord: " << glm::to_string(axis_in_object_coord) << endl;
@@ -316,9 +316,20 @@ void view7SuzanneDisplay()
 void view7SuzanneMotion(int x, int y)
 {
     // if left button is pressed
-    if (view7_arcball_on) {
-        view7_cur_mx = x;
-        view7_cur_my = y;
+    if (arcball_on) {
+        cur_mx = x;
+        cur_my = y;
+    }
+}
+
+void view7SuzanneMouse(int button, int state, int x, int y)
+{
+    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+        arcball_on = true;
+        last_mx = cur_mx = x;
+        last_my = cur_my = y;
+    } else {
+        arcball_on = false;
     }
 }
 
