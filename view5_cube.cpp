@@ -122,3 +122,14 @@ void view5_cube_freeResources()
 {
     glDeleteProgram(view5_cube_program);
 }
+
+void view5_entry(Window *window)
+{
+    window->program = view5_cube_program;
+    window->display = view5CubeDisplay;
+    window->entry = viewEntry;
+    window->init = view5_cube_initResources;
+    window->free = view5_cube_freeResources;
+    window->cull_face = true;
+}
+

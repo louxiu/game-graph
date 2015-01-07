@@ -2,12 +2,8 @@
 #define VIEW12_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view12_program;
-
-int view12_initResources();
-void view12Display();
-void view12_special(int key, int x, int y);
-void view12_freeResources();
+void view12_entry(Window *window);
 
 #endif /* VIEW12_H_ */

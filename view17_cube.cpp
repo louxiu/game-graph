@@ -1,6 +1,5 @@
 #include "view17_cube.h"
 #include "util.h"
-#include "global.h"
 
 GLuint view17_cube_program = 0;
 
@@ -291,4 +290,15 @@ void view17_freeResources()
     glDeleteBuffers(1, &view17_vbo_cube_vertices);
     glDeleteBuffers(1, &view17_vbo_cube_colors);
     glDeleteBuffers(1, &view17_ibo_cube_elements);
+}
+
+void view17_entry(Window *window)
+{
+    window->program = view17_cube_program;
+    window->display = view17Display;
+    window->entry = viewEntry;
+    window->init = view17_initResources;
+    window->free = view17_freeResources;
+    window->idle = view17Idle;
+    window->reshape = view17Reshape;
 }

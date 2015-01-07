@@ -2,11 +2,8 @@
 #define VIEW5_CUBE_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view5_cube_program;
-
-void view5CubeDisplay();
-int view5_cube_initResources();
-void view5_cube_freeResources();
+void view5_entry(Window *window);
 
 #endif /* VIEW5_CUBE_H_ */

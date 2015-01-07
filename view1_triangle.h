@@ -2,12 +2,9 @@
 #define VIEW1_TRIANGLE_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view1_triangle_program;
-
-int view1_triangle_initResources();
-void view1TriangleDisplay();
-void view1_triangle_freeResources();
+void view1_entry(Window *window);
 
 /* TODO: modify the Mesh.h to include it? */
 #endif /* VIEW1_TRIANGLE_H_ */

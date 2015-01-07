@@ -2,12 +2,8 @@
 #define VIEW13_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view13_program;
-
-int view13_initResources();
-void view13Display();
-void view13_special(int key, int x, int y);
-void view13_freeResources();
+void view13_entry(Window *window);
 
 #endif /* VIEW13_H_ */

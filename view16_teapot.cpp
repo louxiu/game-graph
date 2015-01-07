@@ -643,3 +643,15 @@ void view16_teapot_freeResources()
     glDeleteBuffers(1, &view16_vbo_teapot_cp_colors);
     glDeleteBuffers(1, &view16_ibo_teapot_cp_elements);
 }
+
+void view16_entry(Window *window)
+{
+    window->program = view16_teapot_program;
+    window->display = view16Display;
+    window->entry = viewEntry;
+    window->init = view16_initResources;
+    window->free = view16_teapot_freeResources;
+    // window->special = view16_special;
+    window->idle = view16Idle;
+    window->reshape = view16Reshape;
+}

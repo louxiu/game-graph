@@ -2,7 +2,6 @@
 
 #include "Mesh.h"
 #include "util.h"
-#include "global.h"
 #include <SOIL/SOIL.h>
 
 GLuint view10_cube_program = 0;
@@ -440,4 +439,14 @@ void view10_Cube_freeResources ()
 {
     glDeleteProgram(view10_cube_program);
     glDeleteTextures(1, &view10_normalmap_id);
+}
+
+void view10_entry(Window *window)
+{
+    window->program = view10_cube_program;
+    window->display = view10CubeDisplay;
+    window->entry = viewEntry;
+    window->init = view10_Cube_initResources;
+    window->free = view10_Cube_freeResources;
+    window->cull_face = true;
 }

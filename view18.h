@@ -2,11 +2,8 @@
 #define VIEW18_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view18_program;
-
-int view18_initResources();
-void view18_freeResources();
-void view18Display();
+void view18_entry(Window *window);
 
 #endif /* VIEW18_H_ */

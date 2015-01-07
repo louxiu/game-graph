@@ -73,6 +73,12 @@ void create_portal(Mesh* portal,
         glm::vec4( (1+dx), -(1+dy), 0-dz, 1),
         glm::vec4(-(1+dx),  (1+dy), 0-dz, 1),
         glm::vec4( (1+dx),  (1+dy), 0-dz, 1),
+
+        // glm::vec4(-1+dx, -1+dy, 0-dz, 1),
+        // glm::vec4( 1+dx, -1+dy, 0-dz, 1),
+        // glm::vec4(-1+dx,  1+dy, 0-dz, 1),
+        // glm::vec4( 1+dx,  1+dy, 0-dz, 1),
+
     };
 
     for (unsigned int i = 0; i < sizeof(portal_vertices)
@@ -803,6 +809,14 @@ int view21_portal_initResources()
     create_portal(&portals[0], screen_width, screen_height, zNear, fovy);
     create_portal(&portals[1], screen_width, screen_height, zNear, fovy);
 
+    // Face to face
+    // portals[0].object2world = glm::translate(glm::mat4(1), glm::vec3(-2, 0, 0))
+    //   * glm::translate(glm::mat4(1), glm::vec3(0, 1, 0))
+    //   * glm::rotate(glm::mat4(1), 90.0f, glm::vec3(0, 1, 0));
+    // portals[1].object2world = glm::translate(glm::mat4(1), glm::vec3(2, 0, 0))
+    //   * glm::translate(glm::mat4(1), glm::vec3(0, 1, 0))
+    //   * glm::rotate(glm::mat4(1), -90.0f, glm::vec3(0, 1, 0));
+
     // 90° angle + slightly higher
     portals[0].object2world = glm::translate(glm::mat4(1), glm::vec3(0, 1, -2));
     portals[1].object2world = glm::rotate(glm::mat4(1), glm::radians(-90.0f),
@@ -883,4 +897,15 @@ void view21onReshape(int width, int height)
 void view21_portal_freeResources()
 {
     glDeleteProgram(view21_portal_program);
+}
+
+void view21_entry(Window *window)
+{
+    window->program = view21_portal_program;
+    window->display = view21_portal_Display;
+    window->entry = viewEntry;
+    window->init = view21_portal_initResources;
+    window->free = view21_portal_freeResources;
+    window->reshape = view21onReshape;
+    window->motion = view21onMotion;
 }

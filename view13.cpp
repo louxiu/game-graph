@@ -1,5 +1,4 @@
 #include "view13.h"
-#include "global.h"
 #include "util.h"
 
 GLuint view13_program = 0;
@@ -251,4 +250,14 @@ void view13_special(int key, int x, int y)
 void view13_freeResources()
 {
     glDeleteProgram(view13_program);
+}
+
+void view13_entry(Window *window)
+{
+    window->program = view13_program;
+    window->display = view13Display;
+    window->entry = viewEntry;
+    window->init = view13_initResources;
+    window->free = view13_freeResources;
+    window->special = view13_special;
 }

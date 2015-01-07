@@ -22,4 +22,26 @@ struct point {
 	GLfloat x;
 	GLfloat y;
 };
+
+typedef struct Window {
+    GLuint window;
+    GLuint x, y, width, height;
+    void (*display)();
+    void (*mouse)(int button, int state, int x, int y);
+    void (*internalMouse)(int button, int state, int x, int y);
+    void (*entry)(int state);
+    int  (*init)();
+    void (*idle)();
+    void (*reshape)(int width, int height);
+    void (*special)(int key, int x, int y);
+    void (*specialUp)(int key, int x, int y);
+    void (*keyboard)(unsigned char key, int x, int y);
+    void (*motion)(int x, int y);
+    void (*free)();
+    bool cull_face;
+    GLuint program;
+} Window;
+
+void viewEntry(int state);
+
 #endif /* GLOBAL_H_ */

@@ -2,13 +2,8 @@
 #define VIEW17_CUBE_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view17_cube_program;
-
-int view17_initResources();
-void view17_freeResources();
-void view17Display();
-void view17Idle();
-void view17Reshape(int width, int height);
+void view17_entry(Window *window);
 
 #endif /* VIEW17_CUBE_H_ */

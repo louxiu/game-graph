@@ -2,11 +2,8 @@
 #define VIEW10_CUBE_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view10_cube_program;
-
-void view10CubeDisplay();
-int view10_Cube_initResources();
-void view10_Cube_freeResources();
+void view10_entry(Window *window);
 
 #endif /* VIEW10_CUBE_H_ */

@@ -2,7 +2,6 @@
 
 #include "Mesh.h"
 #include "util.h"
-#include "global.h"
 
 GLuint view7_suzanne_program = 0;
 static int last_mx = 0, last_my = 0, cur_mx = 0, cur_my = 0;
@@ -66,6 +65,8 @@ const char *view7_fragment_shaders[] = {
     "glsl/gouraud.7.shading.f.glsl",
     "glsl/gouraud.7.shading-two-sided.f.glsl",
 };
+
+int view7_suzanne_initResources();
 
 void view7SuzanneLogic()
 {
@@ -611,4 +612,18 @@ void view7_suzanne_freeResources()
     glDeleteRenderbuffers(1, &view7_rbo_depth);
     glDeleteTextures(1, &view7_texture_unit);
     glDeleteFramebuffers(1, &view7_fbo);
+}
+
+void view7_entry(Window *window)
+{
+    window->program = view7_suzanne_program;
+    window->display = view7SuzanneDisplay;
+    window->entry = viewEntry;
+    window->init = view7_suzanne_initResources;
+    window->free = view7_suzanne_freeResources;
+    window->special = view7SuzanneSpecial;
+    window->specialUp = view7SuzanneSpecialUp;
+    window->keyboard = view7SuzanneKeyboard;
+    window->motion = view7SuzanneMotion;
+    window->internalMouse = view7SuzanneMouse;
 }

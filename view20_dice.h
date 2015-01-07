@@ -2,12 +2,8 @@
 #define VIEW20_DICE_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view20_dice_program;
-
-int view20_initResources();
-void view20_dice_freeResources();
-void view20Display();
-void view20Mouse(int button, int state, int x, int y);
+void view20_entry(Window *window);
 
 #endif /* VIEW20_DICE_H_ */

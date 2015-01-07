@@ -143,3 +143,13 @@ void view11_freeResources()
     glDeleteBuffers(1, &view11_vbo);
     glDeleteTextures(1, &view11_texture_id);
 }
+
+void view11_entry(Window *window)
+{
+    window->program = view11_program;
+    window->display = view11Display;
+    window->entry = viewEntry;
+    window->init = view11_initResources;
+    window->free = view11_freeResources;
+    window->special = view11_special;
+}

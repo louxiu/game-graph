@@ -2,11 +2,8 @@
 #define VIEW11_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view11_program;
-int view11_initResources();
-void view11Display();
-void view11_special(int key, int x, int y);
-void view11_freeResources();
+void view11_entry(Window *window);
 
 #endif /* VIEW11_H_ */

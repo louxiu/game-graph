@@ -356,3 +356,14 @@ void view20_dice_freeResources()
     glDeleteBuffers(1, &view20_dice_vbo);
     glDeleteBuffers(1, &view20_dice_ibo);
 }
+
+void view20_entry(Window *window)
+{
+    window->program = view20_dice_program;
+    window->display = view20Display;
+    window->entry = viewEntry;
+    window->internalMouse = view20Mouse;
+    window->init = view20_initResources;
+    window->free = view20_dice_freeResources;
+    window->cull_face = true;
+}

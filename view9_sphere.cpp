@@ -48,6 +48,8 @@ struct demo view9_demos[] = {
 };
 int view9_cur_demo = 0;
 
+int view9_Sphere_initResources();
+
 void view9SphereLogic()
 {
     float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 30;  // 30° per second
@@ -321,4 +323,15 @@ void view9_Sphere_freeResources()
     glDeleteProgram(view9_sphere_program);
     glDeleteTextures(1, &view9_mytexture_id);
     glDeleteTextures(1, &view9_mytexture_sunlit_id);
+}
+
+void view9_entry(Window *window)
+{
+    window->program = view9_sphere_program;
+    window->display = view9SphereDisplay;
+    window->entry = viewEntry;
+    window->init = view9_Sphere_initResources;
+    window->free = view9_Sphere_freeResources;
+    window->keyboard = view9SphereKeyboard;
+    window->cull_face = true;
 }

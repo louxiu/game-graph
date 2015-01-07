@@ -2,11 +2,8 @@
 #define VIEW4_TRIANGLE_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view4_triangle_program;
-
-void view4TriangleDisplay();
-int view4_triangle_initResources();
-void view4_triangle_freeResources();
+void view4_entry(Window *window);
 
 #endif /* VIEW4_TRIANGLE_H_ */

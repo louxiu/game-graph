@@ -337,3 +337,15 @@ void view19_freeResources()
 	glDeleteBuffers(1, &view19_ibo_cube_elements);
 	glDeleteTextures(1, &view19_texture_id);
 }
+
+void view19_entry(Window *window)
+{
+    window->program = view19_program;
+    window->display = view19Display;
+    window->entry = viewEntry;
+    window->init = view19_initResources;
+    window->free = view19_freeResources;
+    window->idle = view19Idle;
+    window->reshape = view19Reshape;
+    window->special = view19Special;
+}

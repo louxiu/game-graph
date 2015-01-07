@@ -2,11 +2,8 @@
 #define VIEW8_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view8_program;
-
-int view8_initResources();
-void view8Display();
-void view8_freeResources();
+void view8_entry(Window *window);
 
 #endif /* VIEW8_H_ */

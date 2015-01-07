@@ -76,3 +76,12 @@ void view3_triangle_freeResources()
 {
     glDeleteProgram(view3_triangle_program);
 }
+
+void view3_entry(Window *window)
+{
+    window->program = view3_triangle_program;
+    window->display = view3TriangleDisplay;
+    window->entry = viewEntry;
+    window->init = view3_triangle_initResources;
+    window->free = view3_triangle_freeResources;
+}

@@ -2,7 +2,6 @@
 
 #include "Mesh.h"
 #include "util.h"
-#include "global.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -195,4 +194,13 @@ void view8Display()
 void view8_freeResources()
 {
 	glDeleteProgram(view8_program);
+}
+
+void view8_entry(Window *window)
+{
+	window->program = view8_program;
+    window->display = view8Display;
+    window->entry = viewEntry;
+    window->init = view8_initResources;
+    window->free = view8_freeResources;
 }

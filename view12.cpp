@@ -164,3 +164,13 @@ void view12_freeResources()
     glDeleteBuffers(1, &view12_vbo);
     glDeleteTextures(1, &view12_texture_id);
 }
+
+void view12_entry(Window *window)
+{
+    window->program = view12_program;
+    window->display = view12Display;
+    window->entry = viewEntry;
+    window->init = view12_initResources;
+    window->free = view12_freeResources;
+    window->special = view12_special;
+}

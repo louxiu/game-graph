@@ -2,12 +2,8 @@
 #define VIEW15_H_
 
 #include <GL/glew.h>
+#include "global.h"
 
-extern GLuint view15_program;
-
-int view15_initResources();
-void view15_freeResources();
-void view15Display();
-void view15_special(int key, int x, int y);
+void view15_entry(Window *window);
 
 #endif /* VIEW15_H_ */

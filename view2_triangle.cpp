@@ -49,3 +49,12 @@ void view2_triangle_freeResources()
 }
 
 // TODO: add boost as feature, auto free?
+
+void view2_entry(Window *window)
+{
+    window->program = view2_triangle_program;
+    window->display = view2TriangleDisplay;
+    window->entry = viewEntry;
+    window->init = view2_triangle_initResources;
+    window->free = view2_triangle_freeResources;
+}

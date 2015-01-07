@@ -51,25 +51,6 @@ static unsigned int fps_frames = 0, fps_start = 0;
 GLuint active_window = 0;
 GLuint main_window = 0;
 
-struct Window {
-    GLuint window;
-    GLuint x, y, width, height;
-    void (*display)();
-    void (*mouse)(int button, int state, int x, int y);
-    void (*internalMouse)(int button, int state, int x, int y);
-    void (*entry)(int state);
-    int  (*init)();
-    void (*idle)();
-    void (*reshape)(int width, int height);
-    void (*special)(int key, int x, int y);
-    void (*specialUp)(int key, int x, int y);
-    void (*keyboard)(unsigned char key, int x, int y);
-    void (*motion)(int x, int y);
-    void (*free)();
-    bool cull_face;
-    GLuint program;
-};
-
 // SUB_WINDOW_COL * SUB_WINDOW_ROW
 struct Window win_array[SUB_WINDOW_COL * SUB_WINDOW_ROW];
 
@@ -271,158 +252,30 @@ int initWindow(int argc, char *argv[])
 
     // TODO: make game crazy bird to list
     // TODO: add menu tips like model load
-    win_array[0].program = view1_triangle_program;
-    win_array[0].display = view1TriangleDisplay;
-    win_array[0].entry = viewEntry;
-    win_array[0].init = view1_triangle_initResources;
-    win_array[0].free = view1_triangle_freeResources;
+    // TODO: select subwindow not work
+    // TODO: view7 mouse float not work
 
-    win_array[1].program = view2_triangle_program;
-    win_array[1].display = view2TriangleDisplay;
-    win_array[1].entry = viewEntry;
-    win_array[1].init = view2_triangle_initResources;
-    win_array[1].free = view2_triangle_freeResources;
-
-    win_array[2].program = view3_triangle_program;
-    win_array[2].display = view3TriangleDisplay;
-    win_array[2].entry = viewEntry;
-    win_array[2].init = view3_triangle_initResources;
-    win_array[2].free = view3_triangle_freeResources;
-
-    win_array[3].program = view4_triangle_program;
-    win_array[3].display = view4TriangleDisplay;
-    win_array[3].entry = viewEntry;
-    win_array[3].init = view4_triangle_initResources;
-    win_array[3].free = view4_triangle_freeResources;
-
-    win_array[4].program = view5_cube_program;
-    win_array[4].display = view5CubeDisplay;
-    win_array[4].entry = viewEntry;
-    win_array[4].init = view5_cube_initResources;
-    win_array[4].free = view5_cube_freeResources;
-    win_array[4].cull_face = true;
-
-    win_array[5].program = view6_cube_program;
-    win_array[5].display = view6CubeDisplay;
-    win_array[5].entry = viewEntry;
-    win_array[5].init = view6_cube_initResources;
-    win_array[5].free = view6_cube_freeResources;
-    win_array[5].cull_face = true;
-
-    win_array[6].program = view7_suzanne_program;
-    win_array[6].display = view7SuzanneDisplay;
-    win_array[6].entry = viewEntry;
-    win_array[6].init = view7_suzanne_initResources;
-    win_array[6].free = view7_suzanne_freeResources;
-    win_array[6].special = view7SuzanneSpecial;
-    win_array[6].specialUp = view7SuzanneSpecialUp;
-    win_array[6].keyboard = view7SuzanneKeyboard;
-    win_array[6].motion = view7SuzanneMotion;
-    win_array[6].internalMouse = view7SuzanneMouse;
-
-    win_array[7].program = view8_program;
-    win_array[7].display = view8Display;
-    win_array[7].entry = viewEntry;
-    win_array[7].init = view8_initResources;
-    win_array[7].free = view8_freeResources;
-
-    win_array[8].program = view9_sphere_program;
-    win_array[8].display = view9SphereDisplay;
-    win_array[8].entry = viewEntry;
-    win_array[8].init = view9_Sphere_initResources;
-    win_array[8].free = view9_Sphere_freeResources;
-    win_array[8].keyboard = view9SphereKeyboard;
-    win_array[8].cull_face = true;
-
-    win_array[9].program = view10_cube_program;
-    win_array[9].display = view10CubeDisplay;
-    win_array[9].entry = viewEntry;
-    win_array[9].init = view10_Cube_initResources;
-    win_array[9].free = view10_Cube_freeResources;
-    win_array[9].cull_face = true;
-
-    win_array[10].program = view11_program;
-    win_array[10].display = view11Display;
-    win_array[10].entry = viewEntry;
-    win_array[10].init = view11_initResources;
-    win_array[10].free = view11_freeResources;
-    win_array[10].special = view11_special;
-
-    win_array[11].program = view12_program;
-    win_array[11].display = view12Display;
-    win_array[11].entry = viewEntry;
-    win_array[11].init = view12_initResources;
-    win_array[11].free = view12_freeResources;
-    win_array[11].special = view12_special;
-
-    win_array[12].program = view13_program;
-    win_array[12].display = view13Display;
-    win_array[12].entry = viewEntry;
-    win_array[12].init = view13_initResources;
-    win_array[12].free = view13_freeResources;
-    win_array[12].special = view13_special;
-
-    win_array[13].program = view14_program;
-    win_array[13].display = view14Display;
-    win_array[13].entry = viewEntry;
-    win_array[13].init = view14_initResources;
-    win_array[13].free = view14_freeResources;
-    win_array[13].special = view14_special;
-
-    win_array[14].program = view15_program;
-    win_array[14].display = view15Display;
-    win_array[14].entry = viewEntry;
-    win_array[14].init = view15_initResources;
-    win_array[14].free = view15_freeResources;
-    win_array[14].special = view15_special;
-
-    win_array[15].program = view16_teapot_program;
-    win_array[15].display = view16Display;
-    win_array[15].entry = viewEntry;
-    win_array[15].init = view16_initResources;
-    win_array[15].free = view16_teapot_freeResources;
-    // win_array[15].special = view16_special;
-    win_array[15].idle = view16Idle;
-    win_array[15].reshape = view16Reshape;
-
-    win_array[16].program = view17_cube_program;
-    win_array[16].display = view17Display;
-    win_array[16].entry = viewEntry;
-    win_array[16].init = view17_initResources;
-    win_array[16].free = view17_freeResources;
-    win_array[16].idle = view17Idle;
-    win_array[16].reshape = view17Reshape;
-
-    win_array[17].program = view18_program;
-    win_array[17].display = view18Display;
-    win_array[17].entry = viewEntry;
-    win_array[17].init = view18_initResources;
-    win_array[17].free = view18_freeResources;
-
-    win_array[18].program = view19_program;
-    win_array[18].display = view19Display;
-    win_array[18].entry = viewEntry;
-    win_array[18].init = view19_initResources;
-    win_array[18].free = view19_freeResources;
-    win_array[18].idle = view19Idle;
-    win_array[18].reshape = view19Reshape;
-    win_array[18].special = view19Special;
-
-    win_array[19].program = view20_dice_program;
-    win_array[19].display = view20Display;
-    win_array[19].entry = viewEntry;
-    win_array[19].internalMouse = view20Mouse;
-    win_array[19].init = view20_initResources;
-    win_array[19].free = view20_dice_freeResources;
-    win_array[19].cull_face = true;
-
-    win_array[20].program = view21_portal_program;
-    win_array[20].display = view21_portal_Display;
-    win_array[20].entry = viewEntry;
-    win_array[20].init = view21_portal_initResources;
-    win_array[20].free = view21_portal_freeResources;
-    win_array[20].reshape = view21onReshape;
-    win_array[20].motion = view21onMotion;
+    view1_entry(&win_array[0]);
+    view2_entry(&win_array[1]);
+    view3_entry(&win_array[2]);
+    view4_entry(&win_array[3]);
+    view5_entry(&win_array[4]);
+    view6_entry(&win_array[5]);
+    view7_entry(&win_array[6]);
+    view8_entry(&win_array[7]);
+    view9_entry(&win_array[8]);
+    view10_entry(&win_array[9]);
+    view11_entry(&win_array[10]);
+    view12_entry(&win_array[11]);
+    view13_entry(&win_array[12]);
+    view14_entry(&win_array[13]);
+    view15_entry(&win_array[14]);
+    view16_entry(&win_array[15]);
+    view17_entry(&win_array[16]);
+    view18_entry(&win_array[17]);
+    view19_entry(&win_array[18]);
+    view20_entry(&win_array[19]);
+    view21_entry(&win_array[20]);
 
     for(int i = 0; i < SUB_WINDOW_COL * SUB_WINDOW_ROW; ++i){
         if (win_array[i].init == NULL){
@@ -522,3 +375,7 @@ int main(int argc, char *argv[])
 //       3. http://people.cs.clemson.edu/~dhouse/courses/405/hw/hw6/hw6.html
 //       4. https://github.com/devernay/glm
 // TODO: continue the tutorial
+
+
+// TODO: 1. declare init hook in sub program, in main only call the init.
+// TODO: 2. study stencil and depth buffer, study glEnable. fov
