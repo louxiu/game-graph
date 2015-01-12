@@ -2,10 +2,10 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+
 using namespace std;
 
 #include "view1_triangle.h"
-
 #include "Mesh.h"
 #include "util.h"
 
@@ -30,6 +30,8 @@ void view1TriangleDisplay()
 
 int view1_triangle_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     glm::vec4 triangle_vertices[3] = {
         glm::vec4(0.0, 0.8, 0.0, 1.0),
         glm::vec4(-0.8, -0.8, 0.0, 1.0),
@@ -43,7 +45,7 @@ int view1_triangle_initResources()
     view1_triangle_mesh.upload();
 
     view1_triangle_program = create_program("glsl/triangle.1.v.glsl",
-                                          "glsl/triangle.1.f.glsl");
+                                            "glsl/triangle.1.f.glsl");
 
     view1_attr_coord2d = get_attrib(view1_triangle_program, "coord2d");
 

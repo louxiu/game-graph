@@ -122,6 +122,12 @@ void render_text(const char *text, float x, float y, float sx, float sy,
 
 int view8_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
+	/* Enable blending, necessary for our alpha texture */
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	/* Initialize the FreeType2 library */
 	if (FT_Init_FreeType(&view8_ft)) {
 		fprintf(stderr, "Could not init freetype library\n");
@@ -167,10 +173,6 @@ void view8Display()
 	/* White background */
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	/* Enable blending, necessary for our alpha texture */
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	GLfloat black[4] = {0, 0, 0, 1};
 	GLfloat blue[4] = {0, 0, 1, 1};
 	GLfloat red[4] = {1, 0, 0, 1};
@@ -193,6 +195,7 @@ void view8Display()
 
 void view8_freeResources()
 {
+	glDisable(GL_BLEND);
 	glDeleteProgram(view8_program);
 }
 

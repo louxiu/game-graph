@@ -24,7 +24,7 @@ struct point {
 };
 
 typedef struct Window {
-    GLuint window;
+    GLint window;
     GLuint x, y, width, height;
     void (*display)();
     void (*mouse)(int button, int state, int x, int y);

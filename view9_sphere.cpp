@@ -181,6 +181,7 @@ void view9SphereKeyboard(unsigned char key, int x, int y)
 // TODO: add shadow to subwindow when selected
 int view9_Sphere_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
     // printf("init_resources: %s %s %s\n",
     //        view9_demos[view9_cur_demo].texture_filename,
     //        view9_demos[view9_cur_demo].vshader_filename,

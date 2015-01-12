@@ -157,6 +157,11 @@ atlas *view18_a12;
 
 int view18_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+	/* Enable blending, necessary for our alpha texture */
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	/* Initialize the FreeType2 library */
 	if (FT_Init_FreeType(&view18_ft)) {
 		fprintf(stderr, "Could not init freetype library\n");
@@ -269,10 +274,6 @@ void view18Display()
 	/* White background */
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	/* Enable blending, necessary for our alpha texture */
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	GLfloat black[4] = {0, 0, 0, 1};
 	GLfloat red[4] = {1, 0, 0, 1};
 	GLfloat transparent_green[4] = {0, 1, 0, 0.5};
@@ -293,6 +294,8 @@ void view18Display()
 
 void view18_freeResources()
 {
+	glDisable(GL_BLEND);
+
     glDeleteProgram(view18_program);
     glDeleteBuffers(1, &view18_vbo);
 }

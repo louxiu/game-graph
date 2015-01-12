@@ -465,6 +465,8 @@ void build_teapot()
 
 int view16_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     build_teapot();
 
     glGenBuffers(1, &view16_vbo_teapot_vertices);

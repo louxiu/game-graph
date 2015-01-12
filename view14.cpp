@@ -13,6 +13,8 @@ GLuint view14_vbo[2];
 
 int view14_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
 	view14_program =
         create_program("glsl/graph.14.v.glsl", "glsl/graph.14.f.glsl");
 

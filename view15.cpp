@@ -18,8 +18,10 @@ GLuint view15_vbo[3];
 
 int view15_initResources()
 {
+	glClearColor(1.0, 1.0, 1.0, 0);
+
 	view15_program = create_program("glsl/graph.15.v.glsl",
-                                           "glsl/graph.15.f.glsl");
+									"glsl/graph.15.f.glsl");
 
 	view15_attr_coord2d = get_attrib(view15_program, "coord2d");
 	view15_uniform_vertex_transform = get_uniform(view15_program,
@@ -254,6 +256,9 @@ void view15_special(int key, int x, int y)
 
 void view15_freeResources()
 {
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_POLYGON_OFFSET_FILL);
+
     glDeleteProgram(view15_program);
     glDeleteBuffers(3, view15_vbo);
     glDeleteTextures(1, &view15_texture_id);

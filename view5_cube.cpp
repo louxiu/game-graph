@@ -41,6 +41,8 @@ void view5CubeDisplay()
 
 int view5_cube_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     // glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -120,6 +122,7 @@ int view5_cube_initResources()
 
 void view5_cube_freeResources()
 {
+    glDisable(GL_BLEND);
     glDeleteProgram(view5_cube_program);
 }
 
@@ -132,4 +135,3 @@ void view5_entry(Window *window)
     window->free = view5_cube_freeResources;
     window->cull_face = true;
 }
-

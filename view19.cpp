@@ -29,6 +29,8 @@ glm::vec3 view19_camera_position(0.0, 2.0, 4.0);
 
 int view19_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     // TODO: these function on, index return valid
     glEnable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
@@ -332,6 +334,10 @@ void view19Mouse(int button, int state, int x, int y)
 
 void view19_freeResources()
 {
+    glDisable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_STENCIL_TEST);
+
 	glDeleteProgram(view19_program);
 	glDeleteBuffers(1, &view19_vbo_cube_vertices);
 	glDeleteBuffers(1, &view19_vbo_cube_texcoords);

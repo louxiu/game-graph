@@ -784,6 +784,7 @@ void view21_portal_Display()
 
 int view21_portal_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
     main_mesh.load_obj("data/cube2.21.obj", main_mesh);
 
     for (int i = -GROUND_SIZE/2; i < GROUND_SIZE/2; i++) {
@@ -900,6 +901,11 @@ void view21onReshape(int width, int height)
 
 void view21_portal_freeResources()
 {
+    glDisable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_POLYGON_OFFSET_FILL);
+
     glDeleteProgram(view21_portal_program);
 }
 

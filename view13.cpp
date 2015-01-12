@@ -12,6 +12,7 @@ const int view13_border = 10, view13_ticksize = 10;
 
 int view13_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
 
 	view13_program = create_program("glsl/graph.13.v.glsl",
                                     "glsl/graph.13.f.glsl");
@@ -249,6 +250,7 @@ void view13_special(int key, int x, int y)
 
 void view13_freeResources()
 {
+	glDisable(GL_SCISSOR_TEST);
     glDeleteProgram(view13_program);
 }
 

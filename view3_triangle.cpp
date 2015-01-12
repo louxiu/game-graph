@@ -32,12 +32,13 @@ void view3TriangleDisplay()
 // TODO: pass vec4 to shader vec3
 int view3_triangle_initResources()
 {
-    // TODO: this?
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     view3_triangle_program = create_program("glsl/triangle.3.v.glsl",
-                                          "glsl/triangle.3.f.glsl");
+                                            "glsl/triangle.3.f.glsl");
 
     view3_attr_coord2d = get_attrib(view3_triangle_program, "coord2d");
     view3_attr_color = get_attrib(view3_triangle_program, "v_color");
@@ -74,6 +75,7 @@ int view3_triangle_initResources()
 
 void view3_triangle_freeResources()
 {
+    glDisable(GL_BLEND);
     glDeleteProgram(view3_triangle_program);
 }
 

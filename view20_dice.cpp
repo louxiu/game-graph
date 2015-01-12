@@ -55,6 +55,8 @@ bool dice_roll = true;
 // TODO: motion control is not good as that japanese man
 int view20_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     view20_dice_program = create_program("glsl/map.20.v.glsl",
                                            "glsl/map.20.f.glsl");
 

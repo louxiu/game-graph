@@ -229,10 +229,6 @@ void view7SuzanneLogic()
 void view7SuzanneDisplay()
 {
     // TODO: this is the problem
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_DEPTH_TEST);
-
     view7SuzanneLogic();
 
     bool useFrameBuffer = false;
@@ -442,6 +438,12 @@ void view7SuzanneSpecial(int key, int x, int y)
 
 int view7_suzanne_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST);
+
     if (view7_objects_index == 4){
         // TODO: load the generated sphere
         int stacks = 30;
@@ -605,6 +607,9 @@ int view7_suzanne_initResources()
 // TODO: check memory leak
 void view7_suzanne_freeResources()
 {
+    glDisable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
+
     glDeleteProgram(view7_suzanne_program);
     glDeleteProgram(view7_postproc_program);
 

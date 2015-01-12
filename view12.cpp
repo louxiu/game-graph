@@ -16,6 +16,7 @@ GLuint view12_vbo = 0;
 
 int view12_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
     // TODO: texture lookups in the vertex shader
     // int vertex_texture_units;
     // glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, &vertex_texture_units);

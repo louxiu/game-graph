@@ -18,6 +18,7 @@ GLuint view11_vbo = 0;
 
 int view11_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
 	view11_program = create_program("glsl/graph.11.v.glsl",
                                     "glsl/graph.11.f.glsl");
 
@@ -139,6 +140,8 @@ void view11_special(int key, int x, int y)
 
 void view11_freeResources()
 {
+	glDisable(GL_BLEND);
+
     glDeleteProgram(view11_program);
     glDeleteBuffers(1, &view11_vbo);
     glDeleteTextures(1, &view11_texture_id);

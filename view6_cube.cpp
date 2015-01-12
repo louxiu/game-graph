@@ -5,7 +5,7 @@
 
 #include "SOIL/SOIL.h"
 
-// TODO: make this as a class
+// TODO: remove the prefix and make it static
 Mesh view6_cube_mesh;
 GLint view6_cube_attr_coord3d = -1, view6_cube_attr_texcoord = -1,
     view6_uniform_texture = -1, view6_uniform_mvp = -1;
@@ -51,11 +51,14 @@ void view6CubeDisplay()
 
 int view6_cube_initResources()
 {
-    // glEnable(GL_BLEND);
-    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glClearColor(1.0, 1.0, 1.0, 0);
+
+    glEnable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     view6_cube_program = create_program("glsl/cube.6.v.glsl",
-                                          "glsl/cube.6.f.glsl");
+                                        "glsl/cube.6.f.glsl");
 
     view6_cube_attr_coord3d = get_attrib(view6_cube_program, "coord3d");
     view6_cube_attr_texcoord = get_attrib(view6_cube_program, "texcoord");
@@ -99,6 +102,7 @@ int view6_cube_initResources()
         glm::vec4(1.0,  1.0,  1.0, 1.0),
     };
 
+    // TODO: segment falut
     for(int i = 0; i < sizeof(cube_vertices); ++i){
         view6_cube_mesh.vertices.push_back(cube_vertices[i]);
     }
@@ -159,6 +163,9 @@ int view6_cube_initResources()
 
 void view6_cube_freeResources()
 {
+    glDisable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
+
     glDeleteProgram(view6_cube_program);
 }
 

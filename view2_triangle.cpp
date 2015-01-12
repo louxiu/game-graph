@@ -9,7 +9,8 @@ GLuint view2_triangle_program = 0;
 
 int view2_triangle_initResources()
 {
-    // TODO: this?
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -45,6 +46,7 @@ void view2TriangleDisplay()
 
 void view2_triangle_freeResources()
 {
+    glDisable(GL_BLEND);
     glDeleteProgram(view2_triangle_program);
 }
 

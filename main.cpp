@@ -139,9 +139,7 @@ void windowIdle()
 void freeResources()
 {
     for(int i = 0; i < SUB_WINDOW_COL * SUB_WINDOW_ROW; ++i){
-        if (win_array[i].free != NULL){
-            win_array[i].free();
-        }
+        glutDestroyWindow(win_array[i].window);
     }
 }
 
@@ -218,7 +216,7 @@ int initWindow(int argc, char *argv[])
     for(int i = 0; i < SUB_WINDOW_COL; ++i){
         for(int j = 0; j < SUB_WINDOW_ROW; ++j){
             int winNum = i * SUB_WINDOW_COL + j;
-            win_array[winNum].window = 0;
+            win_array[winNum].window = -1;
             win_array[winNum].x = WINDOWN_BOARDER_GAP * (j + 1)
                 + SUB_WINDOW_WIDTH * j;
 
@@ -249,6 +247,7 @@ int initWindow(int argc, char *argv[])
     // TODO: add menu tips like model load
     // TODO: select subwindow not work
     // TODO: view7 mouse float not work
+    // TODO: destroy window
 
     view1_entry(&win_array[0]);
     view2_entry(&win_array[1]);
@@ -283,12 +282,12 @@ int initWindow(int argc, char *argv[])
                                                   win_array[i].width,
                                                   win_array[i].height);
         // TODO: move to init
-        glClearColor(1.0, 1.0, 1.0, 0);
-        glutDisplayFunc(win_array[i].display);
-        glutEntryFunc(win_array[i].entry);
         if ((*win_array[i].init)() != 0){
             continue;
         }
+
+        glutDisplayFunc(win_array[i].display);
+        glutEntryFunc(win_array[i].entry);
 
         // TODO: view8 disappear
         // TODO: glsl list all attr and uniform
@@ -322,6 +321,10 @@ int initWindow(int argc, char *argv[])
         if (win_array[i].cull_face == true){
             glEnable(GL_CULL_FACE);
         }
+
+        if (win_array[i].free != NULL){
+            glutCloseFunc(win_array[i].free);
+        }
     }
 
     // milliseconds
@@ -349,8 +352,6 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
-// TODO: glutDestroyWindow
 
 // TODO: check this
 // http://feelmare.blogspot.jp/2012/01/sample-source-to-make-subwindow-in.html

@@ -34,6 +34,8 @@ void view4TriangleDisplay()
 
 int view4_triangle_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     view4_triangle_program = create_program("glsl/triangle.4.v.glsl",
                                           "glsl/triangle.4.f.glsl");
     view4_attr_coord2d = get_attrib(view4_triangle_program, "coord2d");
@@ -64,6 +66,7 @@ int view4_triangle_initResources()
 
 void view4_triangle_freeResources()
 {
+
     glDeleteProgram(view4_triangle_program);
 }
 

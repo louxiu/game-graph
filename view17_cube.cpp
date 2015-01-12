@@ -18,6 +18,8 @@ int view17_screen_width = SUB_WINDOW_WIDTH,
 
 int view17_initResources()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
+
     GLfloat cube_vertices[] = {
         // front
         -1.0, -1.0,  1.0,
@@ -226,7 +228,6 @@ void view17Display()
     // TODO: how to create shadow volume
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glEnable(GL_STENCIL_TEST);
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
     glDepthMask(GL_FALSE);
     glStencilFunc(GL_NEVER, 1, 0xFF);
@@ -286,6 +287,8 @@ void view17Reshape(int width, int height)
 
 void view17_freeResources()
 {
+    glDisable(GL_STENCIL_TEST);
+
     glDeleteProgram(view17_cube_program);
     glDeleteBuffers(1, &view17_vbo_cube_vertices);
     glDeleteBuffers(1, &view17_vbo_cube_colors);
