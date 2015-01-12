@@ -3,7 +3,7 @@
 #include "Mesh.h"
 #include "util.h"
 
-#include <SOIL/SOIL.h>
+#include "SOIL/SOIL.h"
 
 // TODO: make this as a class
 Mesh view6_cube_mesh;

@@ -2,7 +2,9 @@
 
 #include "Mesh.h"
 #include "util.h"
-#include <SOIL/SOIL.h>
+#include "SOIL/SOIL.h"
+#include <iostream>
+using namespace std;
 
 GLuint view10_cube_program = 0;
 GLuint view10_normalmap_id = 0;

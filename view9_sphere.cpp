@@ -1,9 +1,11 @@
 #include "view9_sphere.h"
 #include "Mesh.h"
 #include "util.h"
-#include <SOIL/SOIL.h>
+#include "SOIL/SOIL.h"
 
 #include "global.h"
+#include <iostream>
+using namespace std;
 
 GLuint view9_sphere_program = 0;
 GLuint view9_mytexture_id = 0, view9_mytexture_sunlit_id = 0;

@@ -1,6 +1,6 @@
 #include "view20_dice.h"
 #include "util.h"
-#include <SOIL/SOIL.h>
+#include "SOIL/SOIL.h"
 
 GLuint view20_dice_program = 0;
 

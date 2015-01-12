@@ -1,4 +1,6 @@
-FLAGS=-g -lglut -lGLEW -lm -lSOIL -lfreetype
+# FLAGS=-g -lglut -lGLEW -lm -lSOIL -lfreetype
+
+FLAGS=-g -lGL -lglut -lGLEW -I./SOIL -I/usr/include/freetype2/ -L./SOIL -lm -lSOIL -lfreetype
 
 SRC=$(wildcard *.cpp)
 

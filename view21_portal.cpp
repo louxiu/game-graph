@@ -3,6 +3,10 @@
 #include "global.h"
 #include "util.h"
 
+#include <unistd.h>
+#include <iostream>
+using namespace std;
+
 GLuint view21_portal_program = 0;
 
 static int last_mx = 0, last_my = 0,
