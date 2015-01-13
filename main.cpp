@@ -34,6 +34,7 @@
 
 using namespace std;
 // TODO: different view from monkey
+// TODO: problem in fps and mini-portal problem in different pc
 
 const GLuint WINDOWN_BOARDER_GAP = 6;
 const GLuint SUB_WINDOW_COL = 5, SUB_WINDOW_ROW = 5,
