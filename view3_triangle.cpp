@@ -33,7 +33,7 @@ void view3TriangleDisplay()
 int view3_triangle_initResources()
 {
     glClearColor(1.0, 1.0, 1.0, 0);
-
+    // http://nehe.gamedev.net/tutorial/blending/16001/
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
