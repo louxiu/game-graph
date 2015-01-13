@@ -46,19 +46,19 @@ void main()
   vec3 viewDirection = normalize(vec3(v_inv * vec4(0.0, 0.0, 0.0, 1.0) - position));
   vec3 lightDirection;
   float attenuation;
-  
+
   // initialize total lighting with ambient lighting
   vec3 totalLighting = vec3(scene_ambient) * vec3(frontMaterial.ambient);
-  
+
 	  vec3 positionToLightSource = vec3(light0.position - position);
 	  float distanceSqr = dot(positionToLightSource, positionToLightSource);
 	  lightDirection = inversesqrt(distanceSqr) * positionToLightSource;
 	  attenuation = light0.invLinearAttenuation * inversesqrt(distanceSqr);
-      
-      vec3 diffuseReflection = attenuation 
+
+      vec3 diffuseReflection = attenuation
 	* vec3(light0.diffuse) * vec3(frontMaterial.diffuse)
 	* max(0.0, dot(normalDirection, lightDirection));
-      
+
       vec3 specularReflection;
       if (dot(normalDirection, lightDirection) < 0.0) // light source on the wrong side?
 	{
@@ -71,6 +71,6 @@ void main()
 	}
 
       totalLighting = totalLighting + diffuseReflection + specularReflection;
-  
+
   gl_FragColor = vec4(totalLighting, 1.0);
 }

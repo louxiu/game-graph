@@ -38,7 +38,6 @@ typedef struct Window {
     void (*keyboard)(unsigned char key, int x, int y);
     void (*motion)(int x, int y);
     void (*free)();
-    bool cull_face;
     GLuint program;
 } Window;
 

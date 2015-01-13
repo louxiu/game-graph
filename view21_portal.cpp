@@ -752,7 +752,6 @@ void draw_scene(vector<glm::mat4> view_stack, int rec, int outer_portal = -1)
 
 void view21_draw()
 {
-    glClearColor(0.45, 0.45, 0.45, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
     glUseProgram(view21_portal_program);
@@ -767,9 +766,9 @@ void view21_draw()
     glClear(GL_DEPTH_BUFFER_BIT);
     view_stack.clear();
     view_stack.push_back(glm::lookAt(
-                             glm::vec3(0.0,  9.0,-2.0),   // eye
-                             glm::vec3(0.0,  0.0,-2.0),   // direction
-                             glm::vec3(0.0,  0.0,-1.0))   // up
+                             glm::vec3(0.0,  9.0, -2.0),   // eye
+                             glm::vec3(0.0,  0.0, -2.0),   // direction
+                             glm::vec3(0.0,  0.0, -1.0))   // up
                          );
     draw_scene(view_stack, 4);
     draw_camera();
@@ -784,7 +783,20 @@ void view21_portal_Display()
 
 int view21_portal_initResources()
 {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    glEnable(GL_CULL_FACE);
+
+    // Make bounding box clearer against the ground:
+    glEnable(GL_POLYGON_OFFSET_FILL);
+    glPolygonOffset(1, 0);
+
     glClearColor(1.0, 1.0, 1.0, 0);
+
     main_mesh.load_obj("data/cube2.21.obj", main_mesh);
 
     for (int i = -GROUND_SIZE/2; i < GROUND_SIZE/2; i++) {
@@ -838,13 +850,13 @@ int view21_portal_initResources()
     view21_portal_program = create_program("glsl/phong-shading.21.v.glsl",
                                            "glsl/phong-shading.21.f.glsl");
 
-    const char* attr_name;
+    const char *attr_name;
     attr_name = "v_coord";
     attr_v_coord = get_attrib(view21_portal_program, attr_name);
     attr_name = "v_normal";
     attr_v_normal = get_attrib(view21_portal_program, attr_name);
 
-    const char* uniform_name;
+    const char *uniform_name;
     uniform_name = "m";
     uniform_m = get_uniform(view21_portal_program, uniform_name);
 
@@ -860,14 +872,7 @@ int view21_portal_initResources()
     uniform_name = "v_inv";
     uniform_v_inv = get_uniform(view21_portal_program, uniform_name);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glEnable(GL_CULL_FACE);
-    // Make bounding box clearer against the ground:
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(1, 0);
+    return 0;
 }
 
 void view21onMouse(int button, int state, int x, int y)
