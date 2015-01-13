@@ -239,7 +239,6 @@ int initWindow(int argc, char *argv[])
             win_array[winNum].motion = NULL;
             win_array[winNum].mouse = viewMouse;
             win_array[winNum].internalMouse = NULL;
-            win_array[winNum].cull_face = false;
             win_array[winNum].program = 0;
         }
     }
@@ -317,10 +316,6 @@ int initWindow(int argc, char *argv[])
 
         if (win_array[i].motion != NULL){
             glutMotionFunc(win_array[i].motion);
-        }
-
-        if (win_array[i].cull_face == true){
-            glEnable(GL_CULL_FACE);
         }
 
         if (win_array[i].free != NULL){
