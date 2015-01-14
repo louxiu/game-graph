@@ -336,5 +336,4 @@ void view9_entry(Window *window)
     window->init = view9_Sphere_initResources;
     window->free = view9_Sphere_freeResources;
     window->keyboard = view9SphereKeyboard;
-    window->cull_face = true;
 }

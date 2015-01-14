@@ -1,9 +1,17 @@
 #include <iostream>
 #include <fstream>
-#include "global.h"
 #include "util.h"
 
 using namespace std;
+
+const GLuint WINDOWN_BOARDER_GAP = 6;
+const GLuint SUB_WINDOW_COL = 5, SUB_WINDOW_ROW = 5,
+    SUB_WINDOW_WIDTH = 128, SUB_WINDOW_HEIGHT = 128;
+
+const GLuint MAIN_WINDOW_WIDTH = SUB_WINDOW_WIDTH * SUB_WINDOW_COL +
+    (SUB_WINDOW_COL + 1) * WINDOWN_BOARDER_GAP;
+const GLuint MAIN_WINDOW_HEIGHT = SUB_WINDOW_HEIGHT * SUB_WINDOW_ROW +
+    (SUB_WINDOW_ROW + 1) * WINDOWN_BOARDER_GAP;
 
 // TODO: make as c++ class
 // TODO: use boost
@@ -147,6 +155,7 @@ GLuint create_shader(const char *path, GLenum type)
     GLuint shader = glCreateShader(type);
     char *shader_src = load_file(path);
     if (shader_src == NULL){
+        cerr << "load file " << path << "failed" << endl;
         return 0;
     }
 
@@ -195,6 +204,8 @@ GLuint create_program(const char *vertex_path, const char *fragment_path)
             return -1;
         }
         glAttachShader(program, shader);
+    } else {
+        cerr << "vertex shader file is NULL" << endl;
     }
 
     if (fragment_path != NULL){
@@ -204,6 +215,8 @@ GLuint create_program(const char *vertex_path, const char *fragment_path)
             return -1;
         }
         glAttachShader(program, shader);
+    } else {
+        cerr << "fragment shader file is NULL" << endl;
     }
 
     glLinkProgram(program);
@@ -215,4 +228,108 @@ GLuint create_program(const char *vertex_path, const char *fragment_path)
     }
 
     return program;
+}
+
+void viewEntry(int state)
+{
+    if (state == GLUT_LEFT){
+        glClearColor(1, 1, 1, 1);
+    } else if (state == GLUT_ENTERED) {
+        glClearColor(0.5, 0.5, 0.5, 1.0);
+    }
+}
+
+
+void resetWindow(Window *window)
+{
+    window->window = -1;
+    window->x = 0;
+    window->y = 0;
+    window->width = MAIN_WINDOW_WIDTH;
+    window->height = MAIN_WINDOW_HEIGHT;
+    window->display = NULL;
+    window->entry = NULL;
+    window->init = NULL;
+    window->free = NULL;
+    window->idle = NULL;
+    window->reshape = NULL;
+    window->special = NULL;
+    window->specialUp = NULL;
+    window->keyboard = NULL;
+    window->motion = NULL;
+    window->mouse = NULL;
+    window->internalMouse = NULL;
+    window->program = 0;
+}
+
+int mini_initWindow(int argc, char *argv[], Window *window)
+{
+    glutInit(&argc, argv);
+
+    // GLUT_RGB is alias for GLUT_RGBA
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_ALPHA |
+                        GLUT_DEPTH | GLUT_STENCIL);
+
+    glutInitWindowSize(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
+    window->window = glutCreateWindow("all in one");
+
+    if (glewInit() != GLEW_OK){
+        return 1;
+    }
+
+    // TODO: upper version, support opengl es
+    if (!GLEW_VERSION_2_0) {
+        cerr << "Error: your graphic card does not support OpenGL 2.0" << endl;
+        return 1;
+    }
+
+    GLint max_units;
+    glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, &max_units);
+    if (max_units < 1) {
+        cerr << "Your GPU does not have any vertex texture image units" << endl;
+        return 1;
+    }
+
+    // TODO: check why it is not tranparent now
+    glutSetWindowTitle("all in one");
+
+    // TODO: seems not work
+    glutSetIconTitle("icon");
+
+    if ((*window->init)() != 0){
+        cerr << "window->init failed" << endl;
+        return -1;
+    }
+
+    glutDisplayFunc(window->display);
+
+    if (window->keyboard != NULL){
+        glutKeyboardFunc(window->keyboard);
+    }
+
+    if (window->reshape != NULL){
+        glutReshapeFunc(window->reshape);
+    }
+
+    if (window->mouse != NULL){
+        glutMouseFunc(window->mouse);
+    }
+
+    if (window->special != NULL){
+        glutSpecialFunc(window->special);
+    }
+
+    if (window->specialUp != NULL){
+        glutSpecialUpFunc(window->specialUp);
+    }
+
+    if (window->motion != NULL){
+        glutMotionFunc(window->motion);
+    }
+
+    if (window->free != NULL){
+        glutCloseFunc(window->free);
+    }
+
+    return 0;
 }

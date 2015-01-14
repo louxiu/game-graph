@@ -78,3 +78,19 @@ void view4_entry(Window *window)
     window->init = view4_triangle_initResources;
     window->free = view4_triangle_freeResources;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view4_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */

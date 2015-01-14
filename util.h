@@ -13,6 +13,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/ext.hpp>
 
+#include "global.h"
+
 GLuint sphere(float radius, int slices, int stacks);
 glm::vec3 get_arcball_vector(int x, int y);
 char *load_file(const char * path);
@@ -21,5 +23,9 @@ void printLog(GLuint object);
 GLuint create_shader(const char *path, GLenum type);
 GLint get_attrib(GLuint program, const char *attr_name);
 GLuint create_program(const char *vertex_path, const char *fragment_path);
+
+void resetWindow(Window *window);
+int mini_initWindow(int argc, char *argv[], Window *window);
+void viewEntry(int state);
 
 #endif /* UTIL_H_ */

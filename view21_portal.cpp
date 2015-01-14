@@ -42,6 +42,7 @@ void init_view()
 {
     main_mesh.object2world = glm::translate(glm::mat4(1), glm::vec3(-2, 1, 0))
         * glm::rotate(glm::mat4(1), glm::radians(90.0f), glm::vec3(0, 1, 0));
+
     transforms[MODE_CAMERA] = glm::lookAt(
         glm::vec3(0.0,  1.0, 6.0),   // eye
         glm::vec3(0.0,  1.0, 0.0),   // direction
@@ -821,22 +822,27 @@ void view21_draw()
 
     glUseProgram(view21_portal_program);
 
-    vector<glm::mat4> view_stack;
-    view_stack.push_back(transforms[MODE_CAMERA]);
+    main_mesh.draw(main_mesh, attr_v_coord,
+                   -1, attr_v_normal, -1, -1,
+                   uniform_m,
+                   uniform_m_3x3_inv_transp);
 
-    glViewport(0, 0, screen_width, screen_height);
-    draw_scene(view_stack, 1);
+    // vector<glm::mat4> view_stack;
+    // view_stack.push_back(transforms[MODE_CAMERA]);
 
-    glViewport(2*screen_width/3, 0, screen_width/3, screen_height/3);
-    glClear(GL_DEPTH_BUFFER_BIT);
-    view_stack.clear();
-    view_stack.push_back(glm::lookAt(
-                             glm::vec3(0.0,  9.0, -2.0),   // eye
-                             glm::vec3(0.0,  0.0, -2.0),   // direction
-                             glm::vec3(0.0,  0.0, -1.0))   // up
-                         );
-    draw_scene(view_stack, 4);
-    draw_camera();
+    // glViewport(0, 0, screen_width, screen_height);
+    // draw_scene(view_stack, 1);
+
+    // glViewport(2*screen_width/3, 0, screen_width/3, screen_height/3);
+    // glClear(GL_DEPTH_BUFFER_BIT);
+    // view_stack.clear();
+    // view_stack.push_back(glm::lookAt(
+    //                          glm::vec3(0.0,  9.0, -2.0),   // eye
+    //                          glm::vec3(0.0,  0.0, -2.0),   // direction
+    //                          glm::vec3(0.0,  0.0, -1.0))   // up
+    //                      );
+    // draw_scene(view_stack, 4);
+    // draw_camera();
 }
 
 void view21_portal_Display()
@@ -991,3 +997,19 @@ void view21_entry(Window *window)
     window->special = view21_special;
     window->specialUp = view21_specialUp;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view21_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */

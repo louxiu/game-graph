@@ -44,6 +44,8 @@ int view5_cube_initResources()
     glClearColor(1.0, 1.0, 1.0, 0);
 
     // glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -133,5 +135,20 @@ void view5_entry(Window *window)
     window->entry = viewEntry;
     window->init = view5_cube_initResources;
     window->free = view5_cube_freeResources;
-    window->cull_face = true;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view5_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */

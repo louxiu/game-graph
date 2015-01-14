@@ -367,5 +367,4 @@ void view20_entry(Window *window)
     window->internalMouse = view20Mouse;
     window->init = view20_initResources;
     window->free = view20_dice_freeResources;
-    window->cull_face = true;
 }

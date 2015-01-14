@@ -36,15 +36,6 @@ using namespace std;
 // TODO: different view from monkey
 // TODO: problem in fps and mini-portal problem in different pc
 
-const GLuint WINDOWN_BOARDER_GAP = 6;
-const GLuint SUB_WINDOW_COL = 5, SUB_WINDOW_ROW = 5,
-    SUB_WINDOW_WIDTH = 128, SUB_WINDOW_HEIGHT = 128;
-
-const GLuint MAIN_WINDOW_WIDTH = SUB_WINDOW_WIDTH * SUB_WINDOW_COL +
-    (SUB_WINDOW_COL + 1) * WINDOWN_BOARDER_GAP;
-const GLuint MAIN_WINDOW_HEIGHT = SUB_WINDOW_HEIGHT * SUB_WINDOW_ROW +
-    (SUB_WINDOW_ROW + 1) * WINDOWN_BOARDER_GAP;
-
 // calculate frames speed
 GLfloat fps = 0.0;
 static unsigned int fps_frames = 0, fps_start = 0;
@@ -52,9 +43,9 @@ static unsigned int fps_frames = 0, fps_start = 0;
 GLuint active_window = 0;
 GLuint main_window = 0;
 
-// SUB_WINDOW_COL * SUB_WINDOW_ROW
-struct Window win_array[SUB_WINDOW_COL * SUB_WINDOW_ROW];
+struct Window win_array[100];
 
+// TODO: create subsub window and category
 // TODO: add background, bbox, light
 // TODO: add quad view
 // TODO: reshape func
@@ -166,15 +157,6 @@ void viewMouse(int button, int state, int x, int y)
 }
 
 // TODO: what's the function of glclear deapth and other
-void viewEntry(int state)
-{
-    if (state == GLUT_LEFT){
-        glClearColor(1, 1, 1, 1);
-    } else if (state == GLUT_ENTERED) {
-        glClearColor(0.5, 0.5, 0.5, 1.0);
-    }
-}
-
 int initWindow(int argc, char *argv[])
 {
     glutInit(&argc, argv);

@@ -87,3 +87,19 @@ void view3_entry(Window *window)
     window->init = view3_triangle_initResources;
     window->free = view3_triangle_freeResources;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view3_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */

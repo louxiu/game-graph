@@ -177,5 +177,4 @@ void view6_entry(Window *window)
     window->entry = viewEntry;
     window->init = view6_cube_initResources;
     window->free = view6_cube_freeResources;
-    window->cull_face = true;
 }

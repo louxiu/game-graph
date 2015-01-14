@@ -451,5 +451,4 @@ void view10_entry(Window *window)
     window->entry = viewEntry;
     window->init = view10_Cube_initResources;
     window->free = view10_Cube_freeResources;
-    window->cull_face = true;
 }
