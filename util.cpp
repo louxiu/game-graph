@@ -262,6 +262,12 @@ void resetWindow(Window *window)
     window->program = 0;
 }
 
+void mini_idle()
+{
+    glutPostRedisplay();
+
+}
+
 int mini_initWindow(int argc, char *argv[], Window *window)
 {
     glutInit(&argc, argv);
@@ -329,6 +335,12 @@ int mini_initWindow(int argc, char *argv[], Window *window)
 
     if (window->free != NULL){
         glutCloseFunc(window->free);
+    }
+
+    if (window->idle != NULL){
+        glutIdleFunc(window->idle);
+    } else {
+        glutIdleFunc(mini_idle);
     }
 
     return 0;

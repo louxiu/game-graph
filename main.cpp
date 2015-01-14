@@ -68,7 +68,6 @@ int get_window_index(GLuint win)
 // TODO: when click subwindow, main window will get event?
 void mainDisplay()
 {
-    glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glutSwapBuffers();
@@ -88,6 +87,8 @@ void mainDisplay()
 // TODO: add drag window function
 int initResources()
 {
+    glClearColor(0, 0, 0, 0);
+
     return 0;
 }
 
@@ -127,6 +128,10 @@ void windowIdle()
         }
     }
 }
+
+// TODO: write your own framework like glut
+// http://stackoverflow.com/questions/11555588/how-should-i-
+// use-glutpostredisplay-in-a-loop-to-call-display-multiple-times-when
 
 void freeResources()
 {
@@ -224,7 +229,7 @@ int initWindow(int argc, char *argv[])
             win_array[winNum].program = 0;
         }
     }
-
+    // TODO: D macro problem confused
     // TODO: make game crazy bird to list
     // TODO: add menu tips like model load
     // TODO: select subwindow not work
@@ -352,4 +357,6 @@ int main(int argc, char *argv[])
 
 
 // TODO: 1. declare init hook in sub program, in main only call the init.
-// TODO: 2. study stencil and depth buffer, study glEnable. fov
+// TODO: 2. study stencil and depth buffer, fov
+// TODO: why first draw display not work in new computer
+// TODO: the internal of glutDisplayFunc, mini and max call once

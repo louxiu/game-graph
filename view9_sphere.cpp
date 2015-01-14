@@ -181,6 +181,10 @@ void view9SphereKeyboard(unsigned char key, int x, int y)
 // TODO: add shadow to subwindow when selected
 int view9_Sphere_initResources()
 {
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+
+
     glClearColor(1.0, 1.0, 1.0, 0);
     // printf("init_resources: %s %s %s\n",
     //        view9_demos[view9_cur_demo].texture_filename,
@@ -215,31 +219,9 @@ int view9_Sphere_initResources()
              << ")" << endl;
     }
 
-    GLint link_ok = GL_FALSE;
-
-    GLuint vs, fs;
-    if ((vs = create_shader(
-             view9_demos[view9_cur_demo].vshader_filename,
-             GL_VERTEX_SHADER))   == 0) {
-        return 0;
-    }
-
-    if ((fs = create_shader(
-             view9_demos[view9_cur_demo].fshader_filename,
-             GL_FRAGMENT_SHADER)) == 0) {
-        return 0;
-    }
-
-    view9_sphere_program = glCreateProgram();
-    glAttachShader(view9_sphere_program, vs);
-    glAttachShader(view9_sphere_program, fs);
-    glLinkProgram(view9_sphere_program);
-    glGetProgramiv(view9_sphere_program, GL_LINK_STATUS, &link_ok);
-    if (!link_ok) {
-        fprintf(stderr, "glLinkProgram:");
-        printLog(view9_sphere_program);
-        return 0;
-    }
+    view9_sphere_program = create_program(
+        view9_demos[view9_cur_demo].vshader_filename,
+        view9_demos[view9_cur_demo].fshader_filename);
 
     const char* attr_name;
     attr_name = "v_coord";
@@ -280,40 +262,23 @@ int view9_Sphere_initResources()
     uniform_name = "m_3x3_inv_transp";
     view9_uniform_m_3x3_inv_transp = get_uniform(view9_sphere_program,
                                                  uniform_name);
-    if (view9_uniform_m_3x3_inv_transp == -1) {
-        // fprintf(stderr, "Warning: Could not bind uniform %s\n", uniform_name);
-    }
 
     uniform_name = "v_inv";
     view9_uniform_v_inv = get_uniform(view9_sphere_program,
                                       uniform_name);
-    if (view9_uniform_v_inv == -1) {
-        // fprintf(stderr, "Warning: Could not bind uniform %s\n", uniform_name);
-    }
 
     uniform_name = "mytexture";
     view9_uniform_mytexture = get_uniform(view9_sphere_program,
                                           uniform_name);
-    if (view9_uniform_mytexture == -1) {
-        fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
-        return 0;
-    }
 
     uniform_name = "mytexture_sunlit";
     view9_uniform_mytexture_sunlit = get_uniform(view9_sphere_program,
                                                  uniform_name);
-    if (view9_uniform_mytexture_sunlit == -1) {
-        // fprintf(stderr, "Warning: Could not bind uniform %s\n", uniform_name);
-    }
 
     if (strstr(view9_demos[view9_cur_demo].fshader_filename, "_ST")) {
         uniform_name = "mytexture_ST";
         view9_uniform_mytexture_ST = get_uniform(view9_sphere_program,
                                                  uniform_name);
-        if (view9_uniform_mytexture_ST == -1) {
-            fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
-            return 0;
-        }
     }
 
     view9_sphere_vbo = sphere(1, 30, 30);
@@ -337,3 +302,19 @@ void view9_entry(Window *window)
     window->free = view9_Sphere_freeResources;
     window->keyboard = view9SphereKeyboard;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view9_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */

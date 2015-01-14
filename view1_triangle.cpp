@@ -23,8 +23,6 @@ void view1TriangleDisplay()
                              view1_attr_coord2d,
                              -1, -1, -1, -1, -1, -1);
 
-    // testOnDisplay();
-
     glutSwapBuffers();
 }
 

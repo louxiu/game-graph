@@ -358,8 +358,6 @@ void view21_logic()
 bool clip_portal(vector<glm::mat4> view_stack,
                  Mesh* outer_portal, rect* scissor);
 void draw_portals(vector<glm::mat4> view_stack, int rec, int outer_portal);
-// TODO: problem
-// void draw_scene(vector<glm::mat4> view_stack, int rec, int outer_portal = -1);
 void draw_scene(vector<glm::mat4> view_stack, int rec, int outer_portal);
 void fill_screen()
 {
@@ -882,6 +880,8 @@ void view21_portal_Display()
 
 int view21_portal_initResources()
 {
+    glClearColor(0.45, 0.45, 0.45, 1.0);
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

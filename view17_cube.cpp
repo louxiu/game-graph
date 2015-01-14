@@ -18,7 +18,9 @@ int view17_screen_width = SUB_WINDOW_WIDTH,
 
 int view17_initResources()
 {
-    glClearColor(1.0, 1.0, 1.0, 0);
+    glEnable(GL_DEPTH_TEST);
+
+    glClearColor(1.0, 1.0, 1.0, 1.0);
 
     GLfloat cube_vertices[] = {
         // front
@@ -228,6 +230,7 @@ void view17Display()
     // TODO: how to create shadow volume
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glEnable(GL_STENCIL_TEST);
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
     glDepthMask(GL_FALSE);
     glStencilFunc(GL_NEVER, 1, 0xFF);
@@ -267,9 +270,10 @@ void view17Idle()
     glm::mat4 view = glm::lookAt(glm::vec3(0.0, 2.0, 0.0),
                                  glm::vec3(0.0, 0.0, -4.0),
                                  glm::vec3(0.0, 1.0, 0.0));
-    glm::mat4 projection = glm::perspective(45.0f,
-                                            1.0f*view17_screen_width/view17_screen_height,
-                                            0.1f, 10.0f);
+    glm::mat4 projection =
+        glm::perspective(45.0f,
+                         1.0f * view17_screen_width / view17_screen_height,
+                         0.1f, 10.0f);
 
     glm::mat4 mvp = projection * view * model * anim;
 
@@ -305,3 +309,19 @@ void view17_entry(Window *window)
     window->idle = view17Idle;
     window->reshape = view17Reshape;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view17_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */

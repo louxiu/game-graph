@@ -465,6 +465,8 @@ void build_teapot()
 
 int view16_initResources()
 {
+    glEnable(GL_DEPTH_TEST);
+
     glClearColor(1.0, 1.0, 1.0, 0);
 
     build_teapot();
@@ -657,3 +659,19 @@ void view16_entry(Window *window)
     window->idle = view16Idle;
     window->reshape = view16Reshape;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view16_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */

@@ -237,8 +237,6 @@ void view7SuzanneDisplay()
         glBindFramebuffer(GL_FRAMEBUFFER, view7_fbo);
     }
 
-    // glClearColor(0.45, 0.45, 0.45, 1.0);
-    glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(view7_suzanne_program);
@@ -632,3 +630,19 @@ void view7_entry(Window *window)
     window->motion = view7SuzanneMotion;
     window->internalMouse = view7SuzanneMouse;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view7_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */

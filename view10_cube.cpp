@@ -252,7 +252,11 @@ void view10CubeDisplay()
 
 int view10_Cube_initResources()
 {
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+
     glClearColor(1.0, 1.0, 1.0, 0);
+
     // printf("init_resources: %s %s %s\n",
     //        view10_demos[view10_cur_demo].texture_filename,
     //        view10_demos[view10_cur_demo].vshader_filename,
@@ -452,3 +456,19 @@ void view10_entry(Window *window)
     window->init = view10_Cube_initResources;
     window->free = view10_Cube_freeResources;
 }
+
+#ifdef TEST_ALONE
+int main(int argc, char *argv[])
+{
+    Window window;
+    resetWindow(&window);
+
+    view10_entry(&window);
+
+    if (mini_initWindow(argc, argv, &window) == 0){
+        glutMainLoop();
+    }
+
+    return 0;
+}
+#endif /* TEST_ALONE */
