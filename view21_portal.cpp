@@ -483,8 +483,12 @@ void draw_portal_stencil(vector<glm::mat4> view_stack, Mesh* portal)
     // draw stencil pattern
     glClear(GL_STENCIL_BUFFER_BIT);  // needs mask=0xFF
     glUniformMatrix4fv(uniform_v, 1, GL_FALSE, glm::value_ptr(view_stack[0]));
-    portal->draw(*portal, attr_v_coord,
-                 -1, -1, -1, -1, -1, -1);
+    portal->draw(*portal,
+                 attr_v_coord,
+                 -1, attr_v_normal, -1, -1,
+                 uniform_m,
+                 uniform_m_3x3_inv_transp);
+
 
     if (debug) {
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -504,7 +508,9 @@ void draw_portal_stencil(vector<glm::mat4> view_stack, Mesh* portal)
         glStencilOp(GL_INCR, GL_KEEP, GL_KEEP);  // draw 1s on test fail (always)
         glUniformMatrix4fv(uniform_v, 1, GL_FALSE, glm::value_ptr(view_stack[i]));
         portal->draw(*portal, attr_v_coord,
-                     -1, -1, -1, -1, -1, -1);
+                     -1, attr_v_normal, -1, -1,
+                     uniform_m,
+                     uniform_m_3x3_inv_transp);
 
         if (debug) {
             glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -513,7 +519,10 @@ void draw_portal_stencil(vector<glm::mat4> view_stack, Mesh* portal)
             glStencilFunc(GL_LEQUAL, 1, 0xFF);
             glDisable(GL_STENCIL_TEST);
             portal->draw(*portal, attr_v_coord,
-                         -1, -1, -1, -1, -1, -1);
+                         -1, attr_v_normal, -1, -1,
+                         uniform_m,
+                         uniform_m_3x3_inv_transp);
+
             glEnable(GL_STENCIL_TEST);
             //fill_screen();
             glutSwapBuffers();
@@ -526,8 +535,12 @@ void draw_portal_stencil(vector<glm::mat4> view_stack, Mesh* portal)
         glStencilFunc(GL_NEVER, 0, 0xFF);
         glStencilOp(GL_DECR, GL_KEEP, GL_KEEP);  // draw 1s on test fail (always)
         glUniformMatrix4fv(uniform_v, 1, GL_FALSE, glm::value_ptr(view_stack[i-1]));
-        portal->draw(*portal, attr_v_coord,
-                     -1, -1, -1, -1, -1, -1);
+        portal->draw(*portal,
+                     attr_v_coord,
+                   -1, attr_v_normal, -1, -1,
+                   uniform_m,
+                   uniform_m_3x3_inv_transp);
+
         if (debug) {
             glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
             glClear(GL_COLOR_BUFFER_BIT);
@@ -605,8 +618,12 @@ void draw_portals(vector<glm::mat4> view_stack, int rec, int outer_portal)
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
     glDepthMask(GL_TRUE);
     for (int i = 0; i < 2; i++)
-        portals[i].draw(portals[i], attr_v_coord,
-                        -1, -1, -1, -1, -1, -1);
+        portals[i].draw(portals[i],
+                        attr_v_coord,
+                        -1, attr_v_normal, -1, -1,
+                        uniform_m,
+                        uniform_m_3x3_inv_transp);
+
     glColorMask(save_color_mask[0], save_color_mask[1],
                 save_color_mask[2], save_color_mask[3]);
     glDepthMask(save_depth_mask);
@@ -658,12 +675,20 @@ void draw_portal_bbox(Mesh* portal)
 
     /* Apply object's transformation matrix */
     portal_bbox.object2world = portal->object2world;
-    portal_bbox.draw(portal_bbox, attr_v_coord,
-                     -1, -1, -1, -1, -1, -1);
+    portal_bbox.draw(portal_bbox,
+                     attr_v_coord,
+                     -1, attr_v_normal, -1, -1,
+                     uniform_m,
+                     uniform_m_3x3_inv_transp);
+
     portal_bbox.object2world = portal->object2world *
         glm::rotate(glm::mat4(1), glm::radians(180.0f), glm::vec3(0, 1, 0));
-    portal_bbox.draw(portal_bbox, attr_v_coord,
-                     -1, -1, -1, -1, -1, -1);
+    portal_bbox.draw(portal_bbox,
+                     attr_v_coord,
+                     -1, attr_v_normal, -1, -1,
+                     uniform_m,
+                     uniform_m_3x3_inv_transp);
+
 }
 
 bool clip_portal(vector<glm::mat4> view_stack,
@@ -796,10 +821,18 @@ void draw_scene(vector<glm::mat4> view_stack, int rec, int outer_portal = -1)
 
     /* Draw scene */
     //light_bbox.draw_bbox();
-    main_mesh.draw(main_mesh, attr_v_coord,
-                     -1, -1, -1, -1, -1, -1);
-    ground_mesh.draw(ground_mesh, attr_v_coord,
-                     -1, -1, -1, -1, -1, -1);
+    main_mesh.draw(main_mesh,
+                   attr_v_coord,
+                   -1, attr_v_normal, -1, -1,
+                   uniform_m,
+                   uniform_m_3x3_inv_transp);
+
+    ground_mesh.draw(ground_mesh,
+                     attr_v_coord,
+                     -1, attr_v_normal, -1, -1,
+                     uniform_m,
+                     uniform_m_3x3_inv_transp);
+
     //portals[0].draw();
 
     // Restore view matrix
@@ -822,27 +855,22 @@ void view21_draw()
 
     glUseProgram(view21_portal_program);
 
-    main_mesh.draw(main_mesh, attr_v_coord,
-                   -1, attr_v_normal, -1, -1,
-                   uniform_m,
-                   uniform_m_3x3_inv_transp);
+    vector<glm::mat4> view_stack;
+    view_stack.push_back(transforms[MODE_CAMERA]);
 
-    // vector<glm::mat4> view_stack;
-    // view_stack.push_back(transforms[MODE_CAMERA]);
+    glViewport(0, 0, screen_width, screen_height);
+    draw_scene(view_stack, 1);
 
-    // glViewport(0, 0, screen_width, screen_height);
-    // draw_scene(view_stack, 1);
-
-    // glViewport(2*screen_width/3, 0, screen_width/3, screen_height/3);
-    // glClear(GL_DEPTH_BUFFER_BIT);
-    // view_stack.clear();
-    // view_stack.push_back(glm::lookAt(
-    //                          glm::vec3(0.0,  9.0, -2.0),   // eye
-    //                          glm::vec3(0.0,  0.0, -2.0),   // direction
-    //                          glm::vec3(0.0,  0.0, -1.0))   // up
-    //                      );
-    // draw_scene(view_stack, 4);
-    // draw_camera();
+    glViewport(2*screen_width/3, 0, screen_width/3, screen_height/3);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    view_stack.clear();
+    view_stack.push_back(glm::lookAt(
+                             glm::vec3(0.0,  9.0, -2.0),   // eye
+                             glm::vec3(0.0,  0.0, -2.0),   // direction
+                             glm::vec3(0.0,  0.0, -1.0))   // up
+                         );
+    draw_scene(view_stack, 4);
+    draw_camera();
 }
 
 void view21_portal_Display()

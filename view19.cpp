@@ -5,8 +5,8 @@ GLuint view19_program = 0;
 
 #include <glm/gtx/closest_point.hpp>
 // TODO: why redefine problem
-#undef glm_gtx_closest_point
-#include <glm/gtx/closest_point.inl>
+//#undef glm_gtx_closest_point
+//#include <glm/gtx/closest_point.inl>
 #include "data/view19_res_texture.c"
 
 int view19_screen_width = 800, view19_screen_height = 600;
