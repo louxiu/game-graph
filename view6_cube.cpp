@@ -54,8 +54,9 @@ int view6_cube_initResources()
     glClearColor(1.0, 1.0, 1.0, 0);
 
     glEnable(GL_BLEND);
-    glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glEnable(GL_DEPTH_TEST);
 
     view6_cube_program = create_program("glsl/cube.6.v.glsl",
                                         "glsl/cube.6.f.glsl");
