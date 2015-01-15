@@ -168,7 +168,6 @@ void view12_freeResources()
 
 void view12_entry(Window *window)
 {
-    window->program = view12_program;
     window->display = view12Display;
     window->entry = viewEntry;
     window->init = view12_initResources;

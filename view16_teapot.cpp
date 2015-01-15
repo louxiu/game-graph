@@ -650,7 +650,6 @@ void view16_teapot_freeResources()
 
 void view16_entry(Window *window)
 {
-    window->program = view16_teapot_program;
     window->display = view16Display;
     window->entry = viewEntry;
     window->init = view16_initResources;

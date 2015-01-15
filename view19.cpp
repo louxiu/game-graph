@@ -347,7 +347,6 @@ void view19_freeResources()
 
 void view19_entry(Window *window)
 {
-    window->program = view19_program;
     window->display = view19Display;
     window->entry = viewEntry;
     window->init = view19_initResources;

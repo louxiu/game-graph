@@ -149,7 +149,6 @@ void view11_freeResources()
 
 void view11_entry(Window *window)
 {
-    window->program = view11_program;
     window->display = view11Display;
     window->entry = viewEntry;
     window->init = view11_initResources;

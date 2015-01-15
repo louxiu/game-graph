@@ -301,7 +301,6 @@ void view17_freeResources()
 
 void view17_entry(Window *window)
 {
-    window->program = view17_cube_program;
     window->display = view17Display;
     window->entry = viewEntry;
     window->init = view17_initResources;

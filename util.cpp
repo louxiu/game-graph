@@ -259,7 +259,6 @@ void resetWindow(Window *window)
     window->motion = NULL;
     window->mouse = NULL;
     window->internalMouse = NULL;
-    window->program = 0;
 }
 
 void mini_idle()

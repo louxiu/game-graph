@@ -130,7 +130,6 @@ void view5_cube_freeResources()
 
 void view5_entry(Window *window)
 {
-    window->program = view5_cube_program;
     window->display = view5CubeDisplay;
     window->entry = viewEntry;
     window->init = view5_cube_initResources;

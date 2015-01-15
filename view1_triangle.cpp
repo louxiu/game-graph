@@ -59,7 +59,6 @@ void view1_triangle_freeResources()
 
 void view1_entry(Window *window)
 {
-    window->program = view1_triangle_program;
     window->display = view1TriangleDisplay;
     window->entry = viewEntry;
     window->init = view1_triangle_initResources;

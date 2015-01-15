@@ -214,7 +214,6 @@ void view14_freeResources()
 
 void view14_entry(Window *window)
 {
-	window->program = view14_program;
     window->display = view14Display;
     window->entry = viewEntry;
     window->init = view14_initResources;

@@ -295,7 +295,6 @@ void view9_Sphere_freeResources()
 
 void view9_entry(Window *window)
 {
-    window->program = view9_sphere_program;
     window->display = view9SphereDisplay;
     window->entry = viewEntry;
     window->init = view9_Sphere_initResources;

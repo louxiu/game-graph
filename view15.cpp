@@ -266,7 +266,6 @@ void view15_freeResources()
 
 void view15_entry(Window *window)
 {
-    window->program = view15_program;
     window->display = view15Display;
     window->entry = viewEntry;
     window->init = view15_initResources;

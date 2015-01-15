@@ -201,7 +201,6 @@ void view8_freeResources()
 
 void view8_entry(Window *window)
 {
-	window->program = view8_program;
     window->display = view8Display;
     window->entry = viewEntry;
     window->init = view8_initResources;

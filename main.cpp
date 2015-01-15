@@ -226,7 +226,6 @@ int initWindow(int argc, char *argv[])
             win_array[winNum].motion = NULL;
             win_array[winNum].mouse = viewMouse;
             win_array[winNum].internalMouse = NULL;
-            win_array[winNum].program = 0;
         }
     }
     // TODO: D macro problem confused
@@ -280,6 +279,9 @@ int initWindow(int argc, char *argv[])
         // TODO: glsl list all attr and uniform
         // http://stackoverflow.com/questions/440144/in-opengl-is-there-a-way-to-get-a-list-of-all-uniforms-attribs-used-by-a-shade
         // https://www.opengl.org/wiki/Program_Introspection
+        // TODO: design the camera class
+        // TODO: support directx and multi platform
+        // TODO: add c++11 and boost feature
 
         if (win_array[i].keyboard != NULL){
             glutKeyboardFunc(win_array[i].keyboard);

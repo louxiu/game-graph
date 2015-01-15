@@ -54,7 +54,6 @@ void view2_triangle_freeResources()
 
 void view2_entry(Window *window)
 {
-    window->program = view2_triangle_program;
     window->display = view2TriangleDisplay;
     window->entry = viewEntry;
     window->init = view2_triangle_initResources;

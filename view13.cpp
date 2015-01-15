@@ -256,7 +256,6 @@ void view13_freeResources()
 
 void view13_entry(Window *window)
 {
-    window->program = view13_program;
     window->display = view13Display;
     window->entry = viewEntry;
     window->init = view13_initResources;

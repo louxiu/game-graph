@@ -619,7 +619,6 @@ void view7_suzanne_freeResources()
 
 void view7_entry(Window *window)
 {
-    window->program = view7_suzanne_program;
     window->display = view7SuzanneDisplay;
     window->entry = viewEntry;
     window->init = view7_suzanne_initResources;

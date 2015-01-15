@@ -450,7 +450,6 @@ void view10_Cube_freeResources ()
 
 void view10_entry(Window *window)
 {
-    window->program = view10_cube_program;
     window->display = view10CubeDisplay;
     window->entry = viewEntry;
     window->init = view10_Cube_initResources;

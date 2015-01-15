@@ -361,7 +361,6 @@ void view20_dice_freeResources()
 
 void view20_entry(Window *window)
 {
-    window->program = view20_dice_program;
     window->display = view20Display;
     window->entry = viewEntry;
     window->internalMouse = view20Mouse;

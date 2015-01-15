@@ -302,7 +302,6 @@ void view18_freeResources()
 
 void view18_entry(Window *window)
 {
-	window->program = view18_program;
     window->display = view18Display;
     window->entry = viewEntry;
     window->init = view18_initResources;

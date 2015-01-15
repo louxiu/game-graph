@@ -1015,7 +1015,6 @@ void view21_portal_freeResources()
 
 void view21_entry(Window *window)
 {
-    window->program = view21_portal_program;
     window->display = view21_portal_Display;
     window->entry = viewEntry;
     window->init = view21_portal_initResources;

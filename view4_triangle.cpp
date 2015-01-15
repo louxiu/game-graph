@@ -72,7 +72,6 @@ void view4_triangle_freeResources()
 
 void view4_entry(Window *window)
 {
-    window->program = view4_triangle_program;
     window->display = view4TriangleDisplay;
     window->entry = viewEntry;
     window->init = view4_triangle_initResources;
