@@ -6,7 +6,10 @@ Mesh::Mesh()
  :vbo_vertices(0), vbo_colors(0), vbo_normals(0),
   ibo_elements(0), vbo_texture_vertices(0)
 {
-
+    memset(attr_v_name, 0, 20);
+    memset(attr_n_name, 0, 20);
+    memset(attr_c_name, 0, 20);
+    memset(attr_tv_name, 0, 20);
 }
 
 Mesh::~Mesh()
@@ -26,6 +29,26 @@ Mesh::~Mesh()
     if (vbo_texture_vertices != 0){
         glDeleteBuffers(1, &vbo_texture_vertices);
     }
+}
+
+void Mesh::set_attr_v_name(const char *attr_v_name)
+{
+    strncpy(this->attr_v_name, attr_v_name, sizeof(this->attr_v_name) - 1);
+}
+
+void Mesh::set_attr_n_name(const char *attr_n_name)
+{
+    strncpy(this->attr_n_name, attr_n_name, sizeof(this->attr_n_name) - 1);
+}
+
+void Mesh::set_attr_c_name(const char *attr_c_name)
+{
+    strncpy(this->attr_c_name, attr_c_name, sizeof(this->attr_c_name) - 1);
+}
+
+void Mesh::set_attr_tv_name(const char *attr_tv_name)
+{
+    strncpy(this->attr_tv_name, attr_tv_name, sizeof(this->attr_tv_name) - 1);
 }
 
 /**
@@ -78,5 +101,22 @@ void Mesh::upload()
                      sizeof(this->texture_vertices[0]),
                      this->texture_vertices.data(), GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+}
+
+void Mesh::render()
+{
+    /* Push each element in buffer_vertices to the vertex shader */
+    if (this->ibo_elements != 0) {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo_elements);
+        int size;
+        glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER,
+                               GL_BUFFER_SIZE, &size);
+        glDrawElements(GL_TRIANGLES, size / sizeof(GLushort),
+                       GL_UNSIGNED_SHORT, 0);
+    } else {
+        glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
+        /* GLenum ret = glGetError(); */
+        /* printf ("%d\n", ret); */
     }
 }

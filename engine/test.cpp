@@ -14,17 +14,18 @@ using namespace std;
 
 #include "Mesh.h"
 #include "Program.h"
+#include "Render.h"
 
 Program *program = NULL;
 Mesh *mesh = NULL;
-GLint attribute_coord2d = -1;
+Render *render = NULL;
 
 int init_resources()
 {
     glClearColor(1.0, 1.0, 1.0, 1.0);
 
-    program = new Program("glsl/triangle.1.v.glsl",
-                          "glsl/triangle.1.f.glsl");
+    program = new Program("triangle.1.v.glsl",
+                          "triangle.1.f.glsl");
 
     mesh = new Mesh();
 
@@ -38,10 +39,11 @@ int init_resources()
         mesh->vertices.push_back(triangle_vertices[i]);
     }
 
+    mesh->set_attr_v_name("coord2d");
+
     mesh->upload();
 
-    const char* attribute_name = "coord2d";
-    attribute_coord2d = program->get_attrib(attribute_name);
+    render = new Render(mesh, program);
 
     return 1;
 }
@@ -50,33 +52,17 @@ void onDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    program->use();
-
-    glEnableVertexAttribArray(attribute_coord2d);
-
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo_vertices);
-    glVertexAttribPointer(
-        attribute_coord2d, // attribute
-        4,                 // number of elements per vertex, here (x,y)
-        GL_FLOAT,          // the type of each element
-        GL_FALSE,          // take our values as-is
-        0,                 // no extra data between each position
-        0);
-
-    /* Push each element in buffer_vertices to the vertex shader */
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    glDisableVertexAttribArray(attribute_coord2d);
+    render->draw();
 
     glutSwapBuffers();
-
     glutPostRedisplay();
 }
 
 void free_resources()
 {
     delete program;
-    // delete mesh;
+    delete mesh;
+    delete render;
 }
 
 // g++ test.cpp Mesh.cpp Program.cpp -g -lGL -lglut -lGLEW -I../SOIL -I/usr/include/freetype2/ -L../SOIL -lm -lSOIL -lfreetype

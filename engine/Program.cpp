@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <iostream>
-using namespace std;
 
 char *load_file(const char *path)
 {
@@ -85,34 +84,35 @@ void Program::init_attr_location()
     GLint params = -1;
     glGetProgramiv(this->program, GL_ACTIVE_ATTRIBUTES, &params);
 
-    GLsizei length = 0;
-    GLint size = -1;
-    GLenum type;
-    char name[10];
+    ShaderAttribUnif attrib;
 
     for (int index = 0; index < params; index++){
-        glGetActiveAttrib(this->program, index, 9,
-                          &length, &size, &type, name);
-        cerr << name << endl;
+        char name[MAX_NAME_LEN] = {'\0'};
+        glGetActiveAttrib(this->program, index, MAX_NAME_LEN,
+                          &attrib.length, &attrib.size, &attrib.type,
+                          name);
+        attrib.name = name;
+        attrib.location = get_attrib(name);
+        attr_map[name] = attrib;
+        // cerr << attrib.name << endl;
     }
-
-    // GLsizei length​ = 0;
-    // GLint size​ = -1;
-    // GLenum type​;
-    // char name​[10];
-
-    // for (int index = 0; index < params; index++){
-    //     glGetActiveAttrib​(this->program​, index​, 9,
-    //                       &length​, &size​, &type​, name​);
-    // }
-
-    // glGetObjectParameterivA (shaderID, GL_OBJECT_ACTIVE_ATTRIBUTES, &count);
-    // glGetActiveAttrib (shaderID, i, bufSize, &length, &size, &type, name);
 }
 
-void Program::set_attrib()
+void Program::set_attrib(const char *attr_name, GLuint value)
 {
+    string name(attr_name);
+    ShaderAttribUnif attrib = this->attr_map[name];
 
+    glEnableVertexAttribArray(attrib.location);
+
+    glBindBuffer(GL_ARRAY_BUFFER, value);
+    glVertexAttribPointer(
+        attrib.location, // attribute
+        4,                 // number of elements per vertex, here (x,y)
+        GL_FLOAT,          // the type of each element
+        GL_FALSE,          // take our values as-is
+        0,                 // no extra data between each position
+        0);
 }
 
 GLint Program::get_attrib(const char *attr_name)
@@ -130,8 +130,21 @@ GLint Program::get_attrib(const char *attr_name)
 
 void Program::init_uniform_location()
 {
-    // glGetObjectParameteriv (shaderID, GL_OBJECT_ACTIVE_UNIFORMS, &count);
-    // glGetActiveUniform (shaderID, i, bufSize, &length, &size, &type, name);
+    GLint params = -1;
+    glGetProgramiv(this->program, GL_ACTIVE_UNIFORMS, &params);
+
+    ShaderAttribUnif unif;
+
+    for (int index = 0; index < params; index++){
+        char name[MAX_NAME_LEN] = {'\0'};
+        glGetActiveUniform(this->program, index, MAX_NAME_LEN,
+                           &unif.length, &unif.size, &unif.type,
+                           name);
+        unif.name = name;
+        attr_map[name] = unif;
+        unif.location = get_uniform(name);
+        // cerr << unif.name << endl;
+    }
 }
 
 void Program::set_uniform()
@@ -139,9 +152,9 @@ void Program::set_uniform()
 
 }
 
-GLint Program::get_uniform(GLuint program, const char *name)
+GLint Program::get_uniform(const char *name)
 {
-	GLint uniform = glGetUniformLocation(program, name);
+	GLint uniform = glGetUniformLocation(this->program, name);
 
     if(uniform == -1){
 		cerr << "Could not bind uniform " << name << endl;
@@ -190,9 +203,23 @@ Program::Program(const char *vs_path, const char *fs_path)
     }
 
     init_attr_location();
+    init_uniform_location();
 }
 
 Program::~Program()
 {
     glDeleteProgram(this->program);
+}
+
+ostream& operator<< (ostream &out, ShaderAttribUnif &attribUnif)
+{
+    // Since operator<< is a friend of the Point class, we can access
+    // Point's members directly.
+    out << "name: " << attribUnif.name << " ";
+    out << "type: " << attribUnif.type << " ";
+    out << "size: " << attribUnif.size << " ";
+    out << "location: " << attribUnif.location;
+
+    return out;
+
 }

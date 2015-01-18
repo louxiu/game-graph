@@ -15,9 +15,15 @@ using namespace std;
 // https://github.com/libgdx/libgdx/tree/master/gdx/src/com/badlogic/gdx/graphics/g3d
 class Mesh {
   private:
+
   public:
     GLuint vbo_vertices, vbo_colors, vbo_normals,
         ibo_elements, vbo_texture_vertices;
+
+    char attr_v_name[20];
+    char attr_n_name[20];
+    char attr_c_name[20];
+    char attr_tv_name[20];
 
     vector<glm::vec4> vertices;
     vector<glm::vec3> normals;
@@ -31,7 +37,13 @@ class Mesh {
     Mesh();
     virtual ~Mesh();
 
+    void set_attr_v_name(const char *attr_v_name);
+    void set_attr_n_name(const char *attr_n_name);
+    void set_attr_c_name(const char *attr_c_name);
+    void set_attr_tv_name(const char *attr_tv_name);
+
     void upload();
+    void render();
 };
 
 #endif /* MESH_H_ */

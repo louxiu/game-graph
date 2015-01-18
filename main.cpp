@@ -323,6 +323,7 @@ int initWindow(int argc, char *argv[])
 // TODO: http://nehe.gamedev.net
 // TODO: add a subwindow to play video
 // http://nehe.gamedev.net/tutorial/playing_avi_files_in_opengl/23001/
+// TODO: draw boarder for 2d shape
 int main(int argc, char *argv[])
 {
     if (initWindow(argc, argv) != 0){

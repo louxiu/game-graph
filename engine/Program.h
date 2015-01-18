@@ -2,6 +2,22 @@
 #define PROGRAM_H_
 
 #include <GL/glew.h>
+#include <map>
+#include <string>
+using namespace std;
+
+const unsigned int MAX_NAME_LEN = 10;
+
+class ShaderAttribUnif {
+  public:
+    string name;
+    GLenum type;
+    GLint size;
+    GLsizei length;
+    GLint location;
+
+    friend ostream& operator<< (ostream &out, ShaderAttribUnif &attribUnif);
+};
 
 class Program {
   private:
@@ -9,10 +25,13 @@ class Program {
     GLuint vs_shader, fs_shader;
 
     /* GLint attr_v_coord, attr_v_colors, attr_v_normal, attr_t_coord; */
-    GLint attr_array;
-    GLint unif_array;
 
-    GLint get_uniform(GLuint program, const char *name);
+    map<string, ShaderAttribUnif> attr_map;
+    map<string, ShaderAttribUnif> unif_map;
+
+    GLint get_uniform(const char *name);
+    GLint get_attrib(const char *attr_name);
+
     GLuint create_shader(const char *path, GLenum type);
 
     void init_attr_location();
@@ -22,11 +41,10 @@ class Program {
     Program(const char *vs_path, const char *fs_path);
     virtual ~Program();
 
-    GLint get_attrib(const char *attr_name);
-
     void set_uniform();
-    void set_attrib();
+    void set_attrib(const char *attr_name, GLuint value);
     void use();
 
 };
+
 #endif /* PROGRAM_H_ */
