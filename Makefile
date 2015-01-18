@@ -78,7 +78,7 @@ view21 : view21_portal.cpp util.o Mesh.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
 clean :
-	rm -f *.o main view1 view2 view3 view3 view4 view5 view6 view7 view8 view9 view10
+	rm -f *.o main view1 view2 view3 view4 view5 view6 view7 view8 view9 view10
 	rm -f *.o view11 view12 view13 view14 view15 view16 view17 view18
 	rm -f *.o view19 view20 view21
 
