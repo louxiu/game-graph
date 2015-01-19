@@ -1,11 +1,17 @@
-#include "view2_triangle.h"
+#include <iostream>
+#include <vector>
+using namespace std;
 
-#include "Mesh.h"
+#include "view2_triangle.h"
 #include "util.h"
 
-Mesh view2_triangle_mesh;
-GLint view2_attr_coord2d = -1;
-GLuint view2_triangle_program = 0;
+#include "engine/Mesh.h"
+#include "engine/Program.h"
+#include "engine/Render.h"
+
+static Program *program = NULL;
+static Mesh *mesh = NULL;
+static Render *render = NULL;
 
 int view2_triangle_initResources()
 {
@@ -14,6 +20,11 @@ int view2_triangle_initResources()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    program = new Program("glsl/triangle.2.v.glsl",
+                          "glsl/triangle.2.f.glsl");
+
+    mesh = new Mesh();
+
     glm::vec4 triangle_vertices[3] = {
         glm::vec4(0.0, 0.8, 0.0, 1.0),
         glm::vec4(-0.8, -0.8, 0.0, 1.0),
@@ -21,25 +32,22 @@ int view2_triangle_initResources()
     };
 
     for(int i = 0; i < sizeof(triangle_vertices); ++i){
-        view2_triangle_mesh.vertices.push_back(triangle_vertices[i]);
+        mesh->vertices.push_back(triangle_vertices[i]);
     }
 
-    view2_triangle_mesh.upload();
+    mesh->set_attr_v_name("coord2d");
+    mesh->upload();
 
-    view2_triangle_program = create_program("glsl/triangle.2.v.glsl",
-                                            "glsl/triangle.2.f.glsl");
-    view2_attr_coord2d = get_attrib(view2_triangle_program, "coord2d");
+    render = new Render(mesh, program);
+
+    return 0;
 }
 
 void view2TriangleDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(view2_triangle_program);
-
-    view2_triangle_mesh.draw(view2_triangle_mesh,
-                             view2_attr_coord2d,
-                             -1, -1, -1, -1, -1, -1);
+    render->draw();
 
     glutSwapBuffers();
 }
@@ -47,7 +55,10 @@ void view2TriangleDisplay()
 void view2_triangle_freeResources()
 {
     glDisable(GL_BLEND);
-    glDeleteProgram(view2_triangle_program);
+
+    delete program;
+    delete mesh;
+    delete render;
 }
 
 // TODO: add boost as feature, auto free?

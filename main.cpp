@@ -324,6 +324,7 @@ int initWindow(int argc, char *argv[])
 // TODO: add a subwindow to play video
 // http://nehe.gamedev.net/tutorial/playing_avi_files_in_opengl/23001/
 // TODO: draw boarder for 2d shape
+// TODO: use boost
 int main(int argc, char *argv[])
 {
     if (initWindow(argc, argv) != 0){

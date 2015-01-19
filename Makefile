@@ -11,22 +11,22 @@ all : main
 main : $(OBJS)
 	g++ -o $@ $^ $(FLAGS)
 
-%.o : %.cpp
+%.o : %.cpp engine/%.cpp
 	g++ $(FLAGS) -c -o $@ $<
 
-view1 : view1_triangle.cpp util.o Mesh.o
+view1 : view1_triangle.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
-view2 : view2_triangle.cpp util.o Mesh.o
+view2 : view2_triangle.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
-view3 : view3_triangle.cpp util.o Mesh.o
+view3 : view3_triangle.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
-view4 : view4_triangle.cpp util.o Mesh.o
+view4 : view4_triangle.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
-view5 : view5_cube.cpp util.o Mesh.o
+view5 : view5_cube.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
 view6 : view6_cube.cpp util.o Mesh.o

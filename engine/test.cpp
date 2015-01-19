@@ -66,7 +66,8 @@ void free_resources()
 }
 
 // g++ test.cpp Mesh.cpp Program.cpp -g -lGL -lglut -lGLEW -I../SOIL -I/usr/include/freetype2/ -L../SOIL -lm -lSOIL -lfreetype
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
     glutInit(&argc, argv);
     // glutInitContextVersion(2,0);
     glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_DEPTH);

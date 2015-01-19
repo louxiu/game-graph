@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-char *load_file(const char *path)
+char *Program::load_file(const char *path)
 {
     char *content = NULL;
 
@@ -27,7 +27,7 @@ char *load_file(const char *path)
     return content;
 }
 
-void printLog(GLuint object)
+void Program::printLog(GLuint object)
 {
     char *logBuffer = NULL;
     GLint logLength;
@@ -113,6 +113,8 @@ void Program::set_attrib(const char *attr_name, GLuint value)
         GL_FALSE,          // take our values as-is
         0,                 // no extra data between each position
         0);
+
+    // glDisableVertexAttribArray(attrib.location);
 }
 
 GLint Program::get_attrib(const char *attr_name)
@@ -141,15 +143,27 @@ void Program::init_uniform_location()
                            &unif.length, &unif.size, &unif.type,
                            name);
         unif.name = name;
-        attr_map[name] = unif;
         unif.location = get_uniform(name);
-        // cerr << unif.name << endl;
+        this->unif_map[name] = unif;
+        // cout << this->attr_map[name] << endl;
     }
 }
 
-void Program::set_uniform()
+// https://www.opengl.org/sdk/docs/man/html/glUniform.xhtml
+void Program::set_uniform1f(const char *unif_name, float value)
 {
+    string name(unif_name);
+    ShaderAttribUnif unif = this->unif_map[name];
 
+    glUniform1f(unif.location, value);
+}
+
+void Program::set_uniformMatrix4fv(const char *unif_name, GLsizei count,
+                                   GLboolean transpose, float *value)
+{
+    string name(unif_name);
+    ShaderAttribUnif unif = this->unif_map[name];
+    glUniformMatrix4fv(unif.location, count, transpose, value);
 }
 
 GLint Program::get_uniform(const char *name)
@@ -157,7 +171,7 @@ GLint Program::get_uniform(const char *name)
 	GLint uniform = glGetUniformLocation(this->program, name);
 
     if(uniform == -1){
-		cerr << "Could not bind uniform " << name << endl;
+		cerr << "Could not get uniform " << name << endl;
     }
 	return uniform;
 }

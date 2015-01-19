@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-const unsigned int MAX_NAME_LEN = 10;
+const unsigned int MAX_NAME_LEN = 20;
 
 class ShaderAttribUnif {
   public:
@@ -37,11 +37,15 @@ class Program {
     void init_attr_location();
     void init_uniform_location();
 
+    char *load_file(const char *path);
+    void printLog(GLuint object);
+
   public:
     Program(const char *vs_path, const char *fs_path);
     virtual ~Program();
-
-    void set_uniform();
+    void set_uniform1f(const char *unif_name, float value);
+    void set_uniformMatrix4fv(const char *unif_name, GLsizei count,
+                              GLboolean transpose, float *value);
     void set_attrib(const char *attr_name, GLuint value);
     void use();
 

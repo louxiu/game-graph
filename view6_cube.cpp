@@ -1,4 +1,4 @@
-#include "view5_cube.h"
+#include "view6_cube.h"
 
 #include "Mesh.h"
 #include "util.h"

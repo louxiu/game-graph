@@ -1,27 +1,23 @@
 #include <iostream>
 #include <vector>
-#include <fstream>
-#include <sstream>
-
 using namespace std;
 
 #include "view1_triangle.h"
-#include "Mesh.h"
 #include "util.h"
 
-Mesh view1_triangle_mesh;
-GLint view1_attr_coord2d = -1;
-GLuint view1_triangle_program;
+#include "engine/Mesh.h"
+#include "engine/Program.h"
+#include "engine/Render.h"
+
+static Program *program = NULL;
+static Mesh *mesh = NULL;
+static Render *render = NULL;
 
 void view1TriangleDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(view1_triangle_program);
-
-    view1_triangle_mesh.draw(view1_triangle_mesh,
-                             view1_attr_coord2d,
-                             -1, -1, -1, -1, -1, -1);
+    render->draw();
 
     glutSwapBuffers();
 }
@@ -30,6 +26,11 @@ int view1_triangle_initResources()
 {
     glClearColor(1.0, 1.0, 1.0, 0);
 
+    program = new Program("glsl/triangle.1.v.glsl",
+                          "glsl/triangle.1.f.glsl");
+
+    mesh = new Mesh();
+
     glm::vec4 triangle_vertices[3] = {
         glm::vec4(0.0, 0.8, 0.0, 1.0),
         glm::vec4(-0.8, -0.8, 0.0, 1.0),
@@ -37,24 +38,22 @@ int view1_triangle_initResources()
     };
 
     for(int i = 0; i < sizeof(triangle_vertices); ++i){
-        view1_triangle_mesh.vertices.push_back(triangle_vertices[i]);
+        mesh->vertices.push_back(triangle_vertices[i]);
     }
 
-    view1_triangle_mesh.upload();
+    mesh->set_attr_v_name("coord2d");
+    mesh->upload();
 
-    view1_triangle_program = create_program("glsl/triangle.1.v.glsl",
-                                            "glsl/triangle.1.f.glsl");
-
-    view1_attr_coord2d = get_attrib(view1_triangle_program, "coord2d");
-
-    // test_initResources();
+    render = new Render(mesh, program);
 
     return 0;
 }
 
 void view1_triangle_freeResources()
 {
-    glDeleteProgram(view1_triangle_program);
+    delete program;
+    delete mesh;
+    delete render;
 }
 
 void view1_entry(Window *window)
