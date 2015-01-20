@@ -208,6 +208,7 @@ void view8_entry(Window *window)
 }
 
 #ifdef TEST_ALONE
+float fps = 10.0;
 int main(int argc, char *argv[])
 {
     Window window;

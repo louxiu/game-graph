@@ -113,6 +113,7 @@ int view5_cube_initResources()
     }
 
     mesh->upload();
+    program->bind_mesh(mesh);
 
     render = new Render(mesh, program);
 
@@ -122,6 +123,9 @@ int view5_cube_initResources()
 void view5_cube_freeResources()
 {
     glDisable(GL_BLEND);
+
+    program->bind_mesh(mesh);
+
     delete program;
     delete mesh;
     delete render;

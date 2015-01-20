@@ -35,6 +35,7 @@ class Mesh {
     /* vector<glm::vec4> tangents; */
 
     Mesh();
+    Mesh(const char* filename);
     virtual ~Mesh();
 
     void set_attr_v_name(const char *attr_v_name);
@@ -44,6 +45,7 @@ class Mesh {
 
     void upload();
     void render();
+    void render_bbox();
 };
 
 #endif /* MESH_H_ */

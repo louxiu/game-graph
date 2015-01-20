@@ -4,24 +4,23 @@ using namespace std;
 
 #include "view6_cube.h"
 #include "util.h"
-#include "SOIL/SOIL.h"
 
+#include "engine/Texture.h"
 #include "engine/Mesh.h"
 #include "engine/Program.h"
 #include "engine/Render.h"
 
 static Program *program = NULL;
+static Texture *texture = NULL;
 static Mesh *mesh = NULL;
 static Render *render = NULL;
-
-GLuint tbo_texture = 0;
 
 void view6CubeDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // animate
-    float angle = glutGet(GLUT_ELAPSED_TIME) / 20.0 * glm::radians(15.0);
+    float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * glm::radians(15.0);
     glm::mat4 anim = \
         glm::rotate(glm::mat4(1.0f), angle*3.0f, glm::vec3(1, 0, 0)) *
         glm::rotate(glm::mat4(1.0f), angle*2.0f, glm::vec3(0, 1, 0)) *
@@ -42,11 +41,8 @@ void view6CubeDisplay()
     program->set_uniformMatrix4fv("mvp", 1, GL_FALSE,
                                   glm::value_ptr(mvp));
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, tbo_texture);
-    program->set_uniform1i("mytexture", 0);
+    program->set_uniform1i("mytexture", texture->getTbo());
 
-    // TODO: set texture uniform mytexture
     render->draw();
 
     glutSwapBuffers();
@@ -141,22 +137,12 @@ int view6_cube_initResources()
     }
 
     mesh->set_attr_tv_name("texcoord");
-
-    int texture_width, texture_height;
-    // TODO: need to free?
-    unsigned char *texture = SOIL_load_image("data/res_texture.jpg",
-                                    &texture_width,
-                                    &texture_height,
-                                    NULL, 0);
-    glGenTextures(1, &tbo_texture);
-    glBindTexture(GL_TEXTURE_2D, tbo_texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
-                 texture_width, texture_height,
-                 0, GL_RGB, GL_UNSIGNED_BYTE, texture);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
     mesh->upload();
+
+    texture = new Texture("data/res_texture.jpg");
+
+    program->bind_mesh(mesh);
+
     render = new Render(mesh, program);
 
     return 0;
@@ -166,6 +152,8 @@ void view6_cube_freeResources()
 {
     glDisable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
+
+    program->unbind_mesh(mesh);
 
     delete program;
     delete mesh;

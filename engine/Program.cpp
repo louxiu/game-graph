@@ -98,6 +98,13 @@ void Program::init_attr_location()
     }
 }
 
+void Program::unset_attrib(const char *attr_name)
+{
+    string name(attr_name);
+    ShaderAttribUnif attrib = this->attr_map[name];
+    glDisableVertexAttribArray(attrib.location);
+}
+
 void Program::set_attrib(const char *attr_name, GLuint value)
 {
     string name(attr_name);
@@ -114,7 +121,7 @@ void Program::set_attrib(const char *attr_name, GLuint value)
         0,                 // no extra data between each position
         0);
 
-    // glDisableVertexAttribArray(attrib.location);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 GLint Program::get_attrib(const char *attr_name)
@@ -154,6 +161,10 @@ void Program::set_uniform1i(const char *unif_name, GLint value)
     string name(unif_name);
     ShaderAttribUnif unif = this->unif_map[name];
 
+    // TODO: need to disactive at proper place
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, value);
+
     glUniform1i(unif.location, 0);
 }
 
@@ -188,6 +199,7 @@ GLint Program::get_uniform(const char *name)
 void Program::use()
 {
     glUseProgram(this->program);
+
 }
 
 Program::Program(const char *vs_path, const char *fs_path)
@@ -226,6 +238,36 @@ Program::Program(const char *vs_path, const char *fs_path)
 
     init_attr_location();
     init_uniform_location();
+}
+
+void Program::bind_mesh(Mesh *mesh)
+{
+    if (mesh->vbo_vertices != 0) {
+        this->set_attrib(mesh->attr_v_name, mesh->vbo_vertices);
+    }
+
+    if (mesh->vbo_colors != 0) {
+        this->set_attrib(mesh->attr_c_name, mesh->vbo_colors);
+    }
+
+    if (mesh->vbo_texture_vertices != 0) {
+        this->set_attrib(mesh->attr_tv_name, mesh->vbo_texture_vertices);
+    }
+}
+
+void Program::unbind_mesh(Mesh *mesh)
+{
+    if (mesh->vbo_vertices != 0) {
+        this->unset_attrib(mesh->attr_v_name);
+    }
+
+    if (mesh->vbo_colors != 0) {
+        this->unset_attrib(mesh->attr_c_name);
+    }
+
+    if (mesh->vbo_texture_vertices != 0) {
+        this->unset_attrib(mesh->attr_tv_name);
+    }
 }
 
 Program::~Program()

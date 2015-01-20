@@ -9,10 +9,10 @@ class Render {
   private:
     Mesh *mesh;
     Program *program;
-    void bind();
 
   public:
     Render(Mesh *mesh, Program *program);
+    virtual ~Render();
     void set_mesh(Mesh *mesh);
     void set_program(Program *program);
     void draw();

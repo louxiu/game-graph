@@ -29,7 +29,7 @@ view4 : view4_triangle.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o
 view5 : view5_cube.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
-view6 : view6_cube.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o
+view6 : view6_cube.cpp util.o engine/Mesh.o engine/Render.o engine/Program.o engine/Texture.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
 view7 : view7_suzanne.cpp util.o Mesh.o

@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <map>
 #include <string>
+#include "Mesh.h"
+
 using namespace std;
 
 const unsigned int MAX_NAME_LEN = 20;
@@ -48,6 +50,9 @@ class Program {
     void set_uniformMatrix4fv(const char *unif_name, GLsizei count,
                               GLboolean transpose, float *value);
     void set_attrib(const char *attr_name, GLuint value);
+    void unset_attrib(const char *attr_name);
+    void bind_mesh(Mesh *mesh);
+    void unbind_mesh(Mesh *mesh);
     void use();
 
 };

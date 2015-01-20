@@ -70,6 +70,8 @@ int view3_triangle_initResources()
 
     mesh->upload();
 
+    program->bind_mesh(mesh);
+
     render = new Render(mesh, program);
 
     return 0;
@@ -78,6 +80,8 @@ int view3_triangle_initResources()
 void view3_triangle_freeResources()
 {
     glDisable(GL_BLEND);
+
+    program->unbind_mesh(mesh);
 
     delete program;
     delete mesh;

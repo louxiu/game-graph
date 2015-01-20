@@ -38,6 +38,8 @@ int view2_triangle_initResources()
     mesh->set_attr_v_name("coord2d");
     mesh->upload();
 
+    program->bind_mesh(mesh);
+
     render = new Render(mesh, program);
 
     return 0;
@@ -55,6 +57,8 @@ void view2TriangleDisplay()
 void view2_triangle_freeResources()
 {
     glDisable(GL_BLEND);
+
+    program->unbind_mesh(mesh);
 
     delete program;
     delete mesh;

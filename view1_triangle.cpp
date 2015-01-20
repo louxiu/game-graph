@@ -44,6 +44,8 @@ int view1_triangle_initResources()
     mesh->set_attr_v_name("coord2d");
     mesh->upload();
 
+    program->bind_mesh(mesh);
+
     render = new Render(mesh, program);
 
     return 0;
@@ -51,6 +53,8 @@ int view1_triangle_initResources()
 
 void view1_triangle_freeResources()
 {
+    program->unbind_mesh(mesh);
+
     delete program;
     delete mesh;
     delete render;
