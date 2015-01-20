@@ -149,6 +149,14 @@ void Program::init_uniform_location()
     }
 }
 
+void Program::set_uniform1i(const char *unif_name, GLint value)
+{
+    string name(unif_name);
+    ShaderAttribUnif unif = this->unif_map[name];
+
+    glUniform1i(unif.location, 0);
+}
+
 // https://www.opengl.org/sdk/docs/man/html/glUniform.xhtml
 void Program::set_uniform1f(const char *unif_name, float value)
 {

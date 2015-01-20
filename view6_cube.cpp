@@ -1,30 +1,24 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
 #include "view6_cube.h"
-
-#include "Mesh.h"
 #include "util.h"
-
 #include "SOIL/SOIL.h"
 
-// TODO: remove the prefix and make it static
-Mesh view6_cube_mesh;
-GLint view6_cube_attr_coord3d = -1, view6_cube_attr_texcoord = -1,
-    view6_uniform_texture = -1, view6_uniform_mvp = -1;
-GLuint view6_cube_program = 0;
+#include "engine/Mesh.h"
+#include "engine/Program.h"
+#include "engine/Render.h"
+
+static Program *program = NULL;
+static Mesh *mesh = NULL;
+static Render *render = NULL;
+
+GLuint tbo_texture = 0;
 
 void view6CubeDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glUseProgram(view6_cube_program);
-
-    view6_cube_mesh.draw(view6_cube_mesh,
-                         view6_cube_attr_coord3d,
-                         -1,
-                         -1,
-                         view6_cube_attr_texcoord,
-                         view6_uniform_texture,
-                         -1,
-                         -1);
 
     // animate
     float angle = glutGet(GLUT_ELAPSED_TIME) / 20.0 * glm::radians(15.0);
@@ -44,7 +38,16 @@ void view6CubeDisplay()
                                             0.1f, 10.0f);
 
     glm::mat4 mvp = projection * view * model * anim;
-    glUniformMatrix4fv(view6_uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+
+    program->set_uniformMatrix4fv("mvp", 1, GL_FALSE,
+                                  glm::value_ptr(mvp));
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, tbo_texture);
+    program->set_uniform1i("mytexture", 0);
+
+    // TODO: set texture uniform mytexture
+    render->draw();
 
     glutSwapBuffers();
 }
@@ -58,17 +61,9 @@ int view6_cube_initResources()
 
     glEnable(GL_DEPTH_TEST);
 
-    view6_cube_program = create_program("glsl/cube.6.v.glsl",
-                                        "glsl/cube.6.f.glsl");
-
-    view6_cube_attr_coord3d = get_attrib(view6_cube_program, "coord3d");
-    view6_cube_attr_texcoord = get_attrib(view6_cube_program, "texcoord");
-
-    const char *uniform_name = "mytexture";
-    view6_uniform_texture = get_uniform(view6_cube_program,
-                                        uniform_name);
-    uniform_name = "mvp";
-    view6_uniform_mvp = get_uniform(view6_cube_program, uniform_name);
+    program = new Program("glsl/cube.6.v.glsl",
+                          "glsl/cube.6.f.glsl");
+    mesh = new Mesh();
 
     glm::vec4 cube_vertices[] = {
         // front
@@ -103,10 +98,10 @@ int view6_cube_initResources()
         glm::vec4(1.0,  1.0,  1.0, 1.0),
     };
 
-    // TODO: segment falut
     for(int i = 0; i < sizeof(cube_vertices); ++i){
-        view6_cube_mesh.vertices.push_back(cube_vertices[i]);
+        mesh->vertices.push_back(cube_vertices[i]);
     }
+    mesh->set_attr_v_name("coord3d");
 
     GLushort cube_elements[] = {
         // front
@@ -130,7 +125,7 @@ int view6_cube_initResources()
     };
 
     for(int i = 0; i < sizeof(cube_elements); ++i){
-        view6_cube_mesh.elements.push_back(cube_elements[i]);
+        mesh->elements.push_back(cube_elements[i]);
     }
 
     glm::vec4 cube_texture_vertices[4] = {
@@ -141,23 +136,28 @@ int view6_cube_initResources()
         glm::vec4(0.0, 1.0, 0.0, 0.0),
     };
 
-    // for (int i = 1; i < 6; i++){
-    //     memcpy(&cube_texture_vertices[i * 4], &cube_texture_vertices[0],
-    //            4 * sizeof(glm::vec4));
-    // }
-
-    // TODO: printf ("j = %d\n", sizeof(cube_texture_vertices));
     for(int i = 0; i < 4 * 6; ++i){
-        view6_cube_mesh.texture_vertices.push_back(cube_texture_vertices[i%4]);
+        mesh->texture_vertices.push_back(cube_texture_vertices[i%4]);
     }
 
-    // TODO: transparent problem
-    view6_cube_mesh.texture = SOIL_load_image("data/res_texture.jpg",
-                                              &view6_cube_mesh.texture_width,
-                                              &view6_cube_mesh.texture_height,
-                                              NULL, 0);
+    mesh->set_attr_tv_name("texcoord");
 
-    view6_cube_mesh.upload();
+    int texture_width, texture_height;
+    // TODO: need to free?
+    unsigned char *texture = SOIL_load_image("data/res_texture.jpg",
+                                    &texture_width,
+                                    &texture_height,
+                                    NULL, 0);
+    glGenTextures(1, &tbo_texture);
+    glBindTexture(GL_TEXTURE_2D, tbo_texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                 texture_width, texture_height,
+                 0, GL_RGB, GL_UNSIGNED_BYTE, texture);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    mesh->upload();
+    render = new Render(mesh, program);
 
     return 0;
 }
@@ -167,7 +167,9 @@ void view6_cube_freeResources()
     glDisable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
 
-    glDeleteProgram(view6_cube_program);
+    delete program;
+    delete mesh;
+    delete render;
 }
 
 void view6_entry(Window *window)

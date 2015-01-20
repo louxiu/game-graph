@@ -25,6 +25,11 @@ void Render::bind()
     if (mesh->vbo_colors != 0) {
         program->set_attrib(mesh->attr_c_name, mesh->vbo_colors);
     }
+
+    if (mesh->vbo_texture_vertices != 0) {
+        program->set_attrib(mesh->attr_tv_name, mesh->vbo_texture_vertices);
+    }
+
     // TODO: other
 }
 

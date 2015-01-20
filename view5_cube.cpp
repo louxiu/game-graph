@@ -13,7 +13,6 @@ static Program *program = NULL;
 static Mesh *mesh = NULL;
 static Render *render = NULL;
 
-
 void view5CubeDisplay()
 {
     // TODO: the cube transparent problem

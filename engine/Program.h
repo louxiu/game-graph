@@ -43,6 +43,7 @@ class Program {
   public:
     Program(const char *vs_path, const char *fs_path);
     virtual ~Program();
+    void set_uniform1i(const char *unif_name, GLint value);
     void set_uniform1f(const char *unif_name, float value);
     void set_uniformMatrix4fv(const char *unif_name, GLsizei count,
                               GLboolean transpose, float *value);
