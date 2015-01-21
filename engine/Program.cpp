@@ -270,6 +270,16 @@ void Program::unbind_mesh(Mesh *mesh)
     }
 }
 
+void Program::begin()
+{
+    glUseProgram(this->program);
+}
+
+void Program::end()
+{
+    glUseProgram(0);
+}
+
 Program::~Program()
 {
     glDeleteProgram(this->program);

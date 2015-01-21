@@ -54,6 +54,8 @@ class Program {
     void bind_mesh(Mesh *mesh);
     void unbind_mesh(Mesh *mesh);
     void use();
+    void begin();
+    void end();
 
 };
 
