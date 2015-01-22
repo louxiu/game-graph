@@ -143,7 +143,13 @@ void Mesh::upload()
     }
 }
 
-void Mesh::render()
+void bind(Program &program)
+{
+    // TODO: move to vertex class
+
+}
+
+void Mesh::render(Program &program)
 {
     /* Push each element in buffer_vertices to the vertex shader */
     if (this->ibo_elements != 0) {

@@ -240,35 +240,35 @@ Program::Program(const char *vs_path, const char *fs_path)
     init_uniform_location();
 }
 
-void Program::bind_mesh(Mesh *mesh)
-{
-    if (mesh->vbo_vertices != 0) {
-        this->set_attrib(mesh->attr_v_name, mesh->vbo_vertices);
-    }
+// void Program::bind_mesh(Mesh *mesh)
+// {
+//     if (mesh->vbo_vertices != 0) {
+//         this->set_attrib(mesh->attr_v_name, mesh->vbo_vertices);
+//     }
 
-    if (mesh->vbo_colors != 0) {
-        this->set_attrib(mesh->attr_c_name, mesh->vbo_colors);
-    }
+//     if (mesh->vbo_colors != 0) {
+//         this->set_attrib(mesh->attr_c_name, mesh->vbo_colors);
+//     }
 
-    if (mesh->vbo_texture_vertices != 0) {
-        this->set_attrib(mesh->attr_tv_name, mesh->vbo_texture_vertices);
-    }
-}
+//     if (mesh->vbo_texture_vertices != 0) {
+//         this->set_attrib(mesh->attr_tv_name, mesh->vbo_texture_vertices);
+//     }
+// }
 
-void Program::unbind_mesh(Mesh *mesh)
-{
-    if (mesh->vbo_vertices != 0) {
-        this->unset_attrib(mesh->attr_v_name);
-    }
+// void Program::unbind_mesh(Mesh *mesh)
+// {
+//     if (mesh->vbo_vertices != 0) {
+//         this->unset_attrib(mesh->attr_v_name);
+//     }
 
-    if (mesh->vbo_colors != 0) {
-        this->unset_attrib(mesh->attr_c_name);
-    }
+//     if (mesh->vbo_colors != 0) {
+//         this->unset_attrib(mesh->attr_c_name);
+//     }
 
-    if (mesh->vbo_texture_vertices != 0) {
-        this->unset_attrib(mesh->attr_tv_name);
-    }
-}
+//     if (mesh->vbo_texture_vertices != 0) {
+//         this->unset_attrib(mesh->attr_tv_name);
+//     }
+// }
 
 void Program::begin()
 {

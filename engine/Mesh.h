@@ -10,11 +10,13 @@
 
 #include <vector>
 using namespace std;
+#include "Program.h"
 
 // http://www.reddit.com/r/gamedev/comments/232n4o/how_to_write_material_geometry_and_mesh_classes/
 // https://github.com/libgdx/libgdx/tree/master/gdx/src/com/badlogic/gdx/graphics/g3d
 class Mesh {
   private:
+    void bind(Program &program);
 
   public:
     GLuint vbo_vertices, vbo_colors, vbo_normals,
@@ -44,7 +46,7 @@ class Mesh {
     void set_attr_tv_name(const char *attr_tv_name);
 
     void upload();
-    void render();
+    void render(Program &program);
     void render_bbox();
 };
 

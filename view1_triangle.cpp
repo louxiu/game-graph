@@ -17,7 +17,9 @@ void view1TriangleDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    render->begin();
     render->draw();
+    render->end();
 
     glutSwapBuffers();
 }
@@ -25,9 +27,6 @@ void view1TriangleDisplay()
 int view1_triangle_initResources()
 {
     glClearColor(1.0, 1.0, 1.0, 0);
-
-    program = new Program("glsl/triangle.1.v.glsl",
-                          "glsl/triangle.1.f.glsl");
 
     mesh = new Mesh();
 
@@ -44,7 +43,10 @@ int view1_triangle_initResources()
     mesh->set_attr_v_name("coord2d");
     mesh->upload();
 
-    program->bind_mesh(mesh);
+    program = new Program("glsl/triangle.1.v.glsl",
+                          "glsl/triangle.1.f.glsl");
+
+    // program->bind_mesh(mesh);
 
     render = new Render(mesh, program);
 

@@ -4,6 +4,7 @@ Render::Render(Mesh *mesh, Program *program)
 {
     this->mesh = mesh;
     this->program = program;
+    this->totalRenderCalls = 0;
 }
 
 Render::~Render()
@@ -20,9 +21,20 @@ void Render::set_program(Program *program)
     this->program = program;
 }
 
+void Render::begin()
+{
+    // setupMatrices();
+    program->begin();
+}
+
+void Render::end()
+{
+    program->end();
+}
+
 void Render::draw()
 {
-    program->use();
+    this->totalRenderCalls++;
 
     // bind();
 

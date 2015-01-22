@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 #include <map>
 #include <string>
-#include "Mesh.h"
+/* #include "Mesh.h" */
 
 using namespace std;
 
@@ -51,8 +51,8 @@ class Program {
                               GLboolean transpose, float *value);
     void set_attrib(const char *attr_name, GLuint value);
     void unset_attrib(const char *attr_name);
-    void bind_mesh(Mesh *mesh);
-    void unbind_mesh(Mesh *mesh);
+    /* void bind_mesh(Mesh *mesh); */
+    /* void unbind_mesh(Mesh *mesh); */
     void use();
     void begin();
     void end();
