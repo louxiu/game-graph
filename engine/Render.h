@@ -10,13 +10,17 @@ class Render {
     Mesh *mesh;
     Program *program;
     int totalRenderCalls;
+    bool blendingDisabled;
+    int blendSrcFunc, blendDstFunc;
 
   public:
     Render(Mesh *mesh, Program *program);
     virtual ~Render();
     void set_mesh(Mesh *mesh);
     void set_program(Program *program);
-
+    void disableBlending();
+    void enableBlending();
+    void setBlendFunction(int srcFunc, int dstFunc);
     void begin();
     void end();
 

@@ -17,12 +17,6 @@ int view2_triangle_initResources()
 {
     glClearColor(1.0, 1.0, 1.0, 0);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    program = new Program("glsl/triangle.2.v.glsl",
-                          "glsl/triangle.2.f.glsl");
-
     mesh = new Mesh();
 
     glm::vec4 triangle_vertices[3] = {
@@ -38,7 +32,8 @@ int view2_triangle_initResources()
     mesh->set_attr_v_name("coord2d");
     mesh->upload();
 
-    program->bind_mesh(mesh);
+    program = new Program("glsl/triangle.2.v.glsl",
+                          "glsl/triangle.2.f.glsl");
 
     render = new Render(mesh, program);
 
@@ -49,17 +44,15 @@ void view2TriangleDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    render->begin();
     render->draw();
+    render->end();
 
     glutSwapBuffers();
 }
 
 void view2_triangle_freeResources()
 {
-    glDisable(GL_BLEND);
-
-    program->unbind_mesh(mesh);
-
     delete program;
     delete mesh;
     delete render;

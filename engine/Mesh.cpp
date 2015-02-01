@@ -143,14 +143,41 @@ void Mesh::upload()
     }
 }
 
-void bind(Program &program)
+void Mesh::bind(Program &program)
 {
     // TODO: move to vertex class
+    if (this->vbo_vertices != 0) {
+        program.set_attrib(this->attr_v_name, this->vbo_vertices);
+    }
 
+    if (this->vbo_colors != 0) {
+        program.set_attrib(this->attr_c_name, this->vbo_colors);
+    }
+
+    if (this->vbo_texture_vertices != 0) {
+        program.set_attrib(this->attr_tv_name, this->vbo_texture_vertices);
+    }
+}
+
+void Mesh::unbind(Program &program)
+{
+    if (this->vbo_vertices != 0) {
+        program.unset_attrib(this->attr_v_name);
+    }
+
+    if (this->vbo_colors != 0) {
+        program.unset_attrib(this->attr_c_name);
+    }
+
+    if (this->vbo_texture_vertices != 0) {
+        program.unset_attrib(this->attr_tv_name);
+    }
 }
 
 void Mesh::render(Program &program)
 {
+    this->bind(program);
+
     /* Push each element in buffer_vertices to the vertex shader */
     if (this->ibo_elements != 0) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo_elements);
@@ -161,6 +188,8 @@ void Mesh::render(Program &program)
         glDrawArrays(GL_TRIANGLES, 0, this->vertices.size() / sizeof(glm::vec4));
         // cout << this->vertices.size() / sizeof(glm::vec4) << endl;
     }
+
+    this->unbind(program);
 }
 
 void Mesh::render_bbox()

@@ -46,8 +46,6 @@ int view1_triangle_initResources()
     program = new Program("glsl/triangle.1.v.glsl",
                           "glsl/triangle.1.f.glsl");
 
-    // program->bind_mesh(mesh);
-
     render = new Render(mesh, program);
 
     return 0;
@@ -55,8 +53,6 @@ int view1_triangle_initResources()
 
 void view1_triangle_freeResources()
 {
-    program->unbind_mesh(mesh);
-
     delete program;
     delete mesh;
     delete render;

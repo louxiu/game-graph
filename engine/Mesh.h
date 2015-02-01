@@ -16,7 +16,6 @@ using namespace std;
 // https://github.com/libgdx/libgdx/tree/master/gdx/src/com/badlogic/gdx/graphics/g3d
 class Mesh {
   private:
-    void bind(Program &program);
 
   public:
     GLuint vbo_vertices, vbo_colors, vbo_normals,
@@ -39,6 +38,9 @@ class Mesh {
     Mesh();
     Mesh(const char* filename);
     virtual ~Mesh();
+
+    void bind(Program &program);
+    void unbind(Program &program);
 
     void set_attr_v_name(const char *attr_v_name);
     void set_attr_n_name(const char *attr_n_name);
