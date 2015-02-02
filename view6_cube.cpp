@@ -52,8 +52,6 @@ int view6_cube_initResources()
 {
     glClearColor(1.0, 1.0, 1.0, 1.0);
 
-    glEnable(GL_DEPTH_TEST);
-
     mesh = new Mesh();
 
     glm::vec4 cube_vertices[] = {
@@ -140,14 +138,12 @@ int view6_cube_initResources()
     texture = new Texture("data/res_texture.jpg");
 
     render = new Render(mesh, program);
-
+    render->disableBlending();
     return 0;
 }
 
 void view6_cube_freeResources()
 {
-    glDisable(GL_DEPTH_TEST);
-
     delete texture;
     delete program;
     delete mesh;

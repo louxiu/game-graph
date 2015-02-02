@@ -89,6 +89,12 @@ void Render::draw()
         glEnable(GL_CULL_FACE);
     }
 
+    if (depthTestDisabled){
+        glDisable(GL_DEPTH_TEST);
+    } else {
+        glEnable(GL_DEPTH_TEST);
+    }
+
     this->totalRenderCalls++;
 
     // bind();
