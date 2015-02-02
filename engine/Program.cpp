@@ -112,6 +112,7 @@ void Program::set_attrib(const char *attr_name, GLuint value)
 
     glEnableVertexAttribArray(attrib.location);
 
+    // value size of, not 4
     glBindBuffer(GL_ARRAY_BUFFER, value);
     glVertexAttribPointer(
         attrib.location, // attribute
@@ -152,7 +153,6 @@ void Program::init_uniform_location()
         unif.name = name;
         unif.location = get_uniform(name);
         this->unif_map[name] = unif;
-        cout << this->unif_map[name] << endl;
     }
 }
 
@@ -181,7 +181,6 @@ void Program::set_uniformMatrix4fv(const char *unif_name, GLsizei count,
 {
     string name(unif_name);
     ShaderAttribUnif unif = this->unif_map[name];
-    // cout << unif << endl;
     glUniformMatrix4fv(unif.location, count, transpose, value);
 }
 

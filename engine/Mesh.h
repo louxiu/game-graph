@@ -12,8 +12,6 @@
 using namespace std;
 #include "Program.h"
 
-// http://www.reddit.com/r/gamedev/comments/232n4o/how_to_write_material_geometry_and_mesh_classes/
-// https://github.com/libgdx/libgdx/tree/master/gdx/src/com/badlogic/gdx/graphics/g3d
 class Mesh {
   private:
 

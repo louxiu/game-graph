@@ -50,7 +50,7 @@ void view6CubeDisplay()
 
 int view6_cube_initResources()
 {
-    glClearColor(1.0, 1.0, 1.0, 0);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -148,6 +148,7 @@ void view6_cube_freeResources()
 {
     glDisable(GL_DEPTH_TEST);
 
+    delete texture;
     delete program;
     delete mesh;
     delete render;
