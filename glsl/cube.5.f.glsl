@@ -1,6 +1,6 @@
-varying vec3 f_color;
+varying vec4 f_color;
 
 void main()
 {
-    gl_FragColor = vec4(f_color, 1.0);
+    gl_FragColor = f_color;
 }

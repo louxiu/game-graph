@@ -152,7 +152,7 @@ void Program::init_uniform_location()
         unif.name = name;
         unif.location = get_uniform(name);
         this->unif_map[name] = unif;
-        // cout << this->attr_map[name] << endl;
+        cout << this->unif_map[name] << endl;
     }
 }
 
@@ -173,7 +173,6 @@ void Program::set_uniform1f(const char *unif_name, float value)
 {
     string name(unif_name);
     ShaderAttribUnif unif = this->unif_map[name];
-
     glUniform1f(unif.location, value);
 }
 
@@ -182,6 +181,7 @@ void Program::set_uniformMatrix4fv(const char *unif_name, GLsizei count,
 {
     string name(unif_name);
     ShaderAttribUnif unif = this->unif_map[name];
+    // cout << unif << endl;
     glUniformMatrix4fv(unif.location, count, transpose, value);
 }
 

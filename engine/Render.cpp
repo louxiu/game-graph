@@ -8,6 +8,7 @@ Render::Render(Mesh *mesh, Program *program)
     this->blendingDisabled = false;
     this->blendDstFunc = GL_SRC_ALPHA;
     this->blendSrcFunc = GL_ONE_MINUS_SRC_ALPHA;
+    this->cullfaceDisabled = false;
 }
 
 Render::~Render()
@@ -45,6 +46,16 @@ void Render::enableBlending()
     blendingDisabled = false;
 }
 
+void Render::disableCullface()
+{
+    cullfaceDisabled = true;
+}
+
+void Render::enableCullface()
+{
+    cullfaceDisabled = false;
+}
+
 void Render::setBlendFunction(int srcFunc, int dstFunc)
 {
     if (blendSrcFunc == srcFunc && blendDstFunc == dstFunc) return;
@@ -58,6 +69,12 @@ void Render::draw()
     } else {
         glEnable(GL_BLEND);
         glBlendFunc(blendSrcFunc, blendDstFunc);
+    }
+
+    if (cullfaceDisabled){
+        glDisable(GL_CULL_FACE);
+    } else {
+        glEnable(GL_CULL_FACE);
     }
 
     this->totalRenderCalls++;

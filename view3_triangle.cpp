@@ -21,10 +21,10 @@ void view3TriangleDisplay()
     float cur_fade = sinf(glutGet(GLUT_ELAPSED_TIME) /
                           1000.0 * (2 * M_PI) / 5) / 2 + 0.5;
 
-
+    render->begin();
     program->set_uniform1f("fade", cur_fade);
-
     render->draw();
+    render->end();
 
     glutSwapBuffers();
 }
@@ -33,9 +33,6 @@ void view3TriangleDisplay()
 int view3_triangle_initResources()
 {
     glClearColor(1.0, 1.0, 1.0, 0);
-    // http://nehe.gamedev.net/tutorial/blending/16001/
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     program = new Program("glsl/triangle.3.v.glsl",
                           "glsl/triangle.3.f.glsl");
@@ -70,8 +67,6 @@ int view3_triangle_initResources()
 
     mesh->upload();
 
-    program->bind_mesh(mesh);
-
     render = new Render(mesh, program);
 
     return 0;
@@ -79,10 +74,6 @@ int view3_triangle_initResources()
 
 void view3_triangle_freeResources()
 {
-    glDisable(GL_BLEND);
-
-    program->unbind_mesh(mesh);
-
     delete program;
     delete mesh;
     delete render;

@@ -24,10 +24,11 @@ void view4TriangleDisplay()
         glm::translate(glm::mat4(1.0f), glm::vec3(move, 0.0, 0.0)) *
         glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
 
+    render->begin();
     program->set_uniformMatrix4fv("m_transform", 1, GL_FALSE,
                                   glm::value_ptr(m_transform));
-
     render->draw();
+    render->end();
 
     glutSwapBuffers();
 }
@@ -36,15 +37,12 @@ int view4_triangle_initResources()
 {
     glClearColor(1.0, 1.0, 1.0, 0);
 
-    program = new Program("glsl/triangle.4.v.glsl",
-                          "glsl/triangle.4.f.glsl");
-
     mesh = new Mesh();
 
     glm::vec4 triangle_vertices[3] = {
-        glm::vec4(0.0, 0.8, 0.0, 1.0),
-        glm::vec4(-0.8, -0.8, 0.0, 1.0),
-        glm::vec4(0.8, -0.8, 0.0, 1.0)
+        glm::vec4(0.0, 0.8, 0.0, 0.0),
+        glm::vec4(-0.8, -0.8, 0.0, 0.0),
+        glm::vec4(0.8, -0.8, 0.0, 0.0)
     };
 
     for(int i = 0; i < sizeof(triangle_vertices); ++i){
@@ -54,17 +52,20 @@ int view4_triangle_initResources()
     mesh->set_attr_v_name("coord2d");
 
     mesh->upload();
-    program->bind_mesh(mesh);
+
+    program = new Program("glsl/triangle.4.v.glsl",
+                          "glsl/triangle.4.f.glsl");
+
 
     render = new Render(mesh, program);
+
+    render->disableBlending();
 
     return 0;
 }
 
 void view4_triangle_freeResources()
 {
-    program->unbind_mesh(mesh);
-
     delete program;
     delete mesh;
     delete render;

@@ -38,12 +38,12 @@ void view6CubeDisplay()
 
     glm::mat4 mvp = projection * view * model * anim;
 
+    render->begin();
     program->set_uniformMatrix4fv("mvp", 1, GL_FALSE,
                                   glm::value_ptr(mvp));
-
     program->set_uniform1i("mytexture", texture->getTbo());
-
     render->draw();
+    render->end();
 
     glutSwapBuffers();
 }
@@ -52,13 +52,8 @@ int view6_cube_initResources()
 {
     glClearColor(1.0, 1.0, 1.0, 0);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     glEnable(GL_DEPTH_TEST);
 
-    program = new Program("glsl/cube.6.v.glsl",
-                          "glsl/cube.6.f.glsl");
     mesh = new Mesh();
 
     glm::vec4 cube_vertices[] = {
@@ -139,9 +134,10 @@ int view6_cube_initResources()
     mesh->set_attr_tv_name("texcoord");
     mesh->upload();
 
-    texture = new Texture("data/res_texture.jpg");
+    program = new Program("glsl/cube.6.v.glsl",
+                          "glsl/cube.6.f.glsl");
 
-    program->bind_mesh(mesh);
+    texture = new Texture("data/res_texture.jpg");
 
     render = new Render(mesh, program);
 
@@ -150,10 +146,7 @@ int view6_cube_initResources()
 
 void view6_cube_freeResources()
 {
-    glDisable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
-
-    program->unbind_mesh(mesh);
 
     delete program;
     delete mesh;

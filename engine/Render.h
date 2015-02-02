@@ -12,6 +12,7 @@ class Render {
     int totalRenderCalls;
     bool blendingDisabled;
     int blendSrcFunc, blendDstFunc;
+    bool cullfaceDisabled;
 
   public:
     Render(Mesh *mesh, Program *program);
@@ -21,6 +22,10 @@ class Render {
     void disableBlending();
     void enableBlending();
     void setBlendFunction(int srcFunc, int dstFunc);
+
+    void disableCullface();
+    void enableCullface();
+
     void begin();
     void end();
 

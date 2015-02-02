@@ -15,8 +15,7 @@ static Render *render = NULL;
 
 void view5CubeDisplay()
 {
-    // TODO: the cube transparent problem
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
     // TODO: perspective internal
     // TODO: move to mesh and clean this
@@ -31,26 +30,20 @@ void view5CubeDisplay()
     glm::mat4 anim = glm::rotate(glm::mat4(1.0f), angle, axis_y);
     glm::mat4 mvp = projection * view * model * anim;
 
-
-    program->set_uniformMatrix4fv("mvp", 1, GL_FALSE,
-                                  glm::value_ptr(mvp));
-
+    render->begin();
+    program->set_uniformMatrix4fv("mvp", 1, GL_FALSE, glm::value_ptr(mvp));
     render->draw();
+    render->end();
 
     glutSwapBuffers();
+    glutPostRedisplay();
 }
 
 int view5_cube_initResources()
 {
+    glEnable(GL_DEPTH_TEST);
     glClearColor(1.0, 1.0, 1.0, 0);
-    // glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    program = new Program("glsl/cube.5.v.glsl",
-                          "glsl/cube.5.f.glsl");
     mesh = new Mesh();
 
     glm::vec4 cube_vertices[8] = {
@@ -113,7 +106,9 @@ int view5_cube_initResources()
     }
 
     mesh->upload();
-    program->bind_mesh(mesh);
+
+    program = new Program("glsl/cube.5.v.glsl",
+                          "glsl/cube.5.f.glsl");
 
     render = new Render(mesh, program);
 
@@ -122,10 +117,6 @@ int view5_cube_initResources()
 
 void view5_cube_freeResources()
 {
-    glDisable(GL_BLEND);
-
-    program->bind_mesh(mesh);
-
     delete program;
     delete mesh;
     delete render;
