@@ -15,7 +15,7 @@ static Render *render = NULL;
 
 void view5CubeDisplay()
 {
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // TODO: perspective internal
     // TODO: move to mesh and clean this
@@ -36,7 +36,6 @@ void view5CubeDisplay()
     render->end();
 
     glutSwapBuffers();
-    glutPostRedisplay();
 }
 
 int view5_cube_initResources()
@@ -64,14 +63,14 @@ int view5_cube_initResources()
     mesh->set_attr_v_name("coord3d");
 
     glm::vec4 cube_colors[8] = {
-        glm::vec4(1.0, 0.0, 0.0, 1.0),
-        glm::vec4(0.0, 1.0, 0.0, 1.0),
-        glm::vec4(0.0, 0.0, 1.0, 1.0),
-        glm::vec4(1.0, 1.0, 1.0, 1.0),
-        glm::vec4(1.0, 0.0, 0.0, 1.0),
-        glm::vec4(0.0, 1.0, 0.0, 1.0),
-        glm::vec4(0.0, 0.0, 1.0, 1.0),
-        glm::vec4(1.0, 1.0, 1.0, 1.0),
+        glm::vec4(1.0, 0.0, 0.0, 0.0),
+        glm::vec4(0.0, 1.0, 0.0, 0.0),
+        glm::vec4(0.0, 0.0, 1.0, 0.0),
+        glm::vec4(1.0, 1.0, 1.0, 0.0),
+        glm::vec4(1.0, 0.0, 0.0, 0.0),
+        glm::vec4(0.0, 1.0, 0.0, 0.0),
+        glm::vec4(0.0, 0.0, 1.0, 0.0),
+        glm::vec4(1.0, 1.0, 1.0, 0.0),
     };
 
     for(int i = 0; i < sizeof(cube_colors); ++i){

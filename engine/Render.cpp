@@ -9,6 +9,7 @@ Render::Render(Mesh *mesh, Program *program)
     this->blendDstFunc = GL_SRC_ALPHA;
     this->blendSrcFunc = GL_ONE_MINUS_SRC_ALPHA;
     this->cullfaceDisabled = false;
+    this->depthTestDisabled = false;
 }
 
 Render::~Render()
@@ -34,6 +35,16 @@ void Render::begin()
 void Render::end()
 {
     program->end();
+}
+
+void Render::disableDepthTest()
+{
+    depthTestDisabled = true;
+}
+
+void Render::enableDepthTest()
+{
+    depthTestDisabled = false;
 }
 
 void Render::disableBlending()
@@ -62,6 +73,7 @@ void Render::setBlendFunction(int srcFunc, int dstFunc)
     blendSrcFunc = srcFunc;
     blendDstFunc = dstFunc;
 }
+
 void Render::draw()
 {
     if (blendingDisabled){

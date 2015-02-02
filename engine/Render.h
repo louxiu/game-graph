@@ -13,18 +13,24 @@ class Render {
     bool blendingDisabled;
     int blendSrcFunc, blendDstFunc;
     bool cullfaceDisabled;
+    bool depthTestDisabled;
 
   public:
     Render(Mesh *mesh, Program *program);
     virtual ~Render();
+
     void set_mesh(Mesh *mesh);
     void set_program(Program *program);
+
     void disableBlending();
     void enableBlending();
     void setBlendFunction(int srcFunc, int dstFunc);
 
     void disableCullface();
     void enableCullface();
+
+    void disableDepthTest();
+    void enableDepthTest();
 
     void begin();
     void end();
