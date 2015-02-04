@@ -17,6 +17,7 @@ static Render *render = NULL;
 
 void view6CubeDisplay()
 {
+    glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // animate
@@ -50,8 +51,6 @@ void view6CubeDisplay()
 
 int view6_cube_initResources()
 {
-    glClearColor(1.0, 1.0, 1.0, 1.0);
-
     mesh = new Mesh();
 
     glm::vec4 cube_vertices[] = {

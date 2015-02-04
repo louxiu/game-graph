@@ -15,6 +15,7 @@ static Render *render = NULL;
 
 void view4TriangleDisplay()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     float move = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 5);
@@ -35,8 +36,6 @@ void view4TriangleDisplay()
 
 int view4_triangle_initResources()
 {
-    glClearColor(1.0, 1.0, 1.0, 0);
-
     mesh = new Mesh();
 
     glm::vec4 triangle_vertices[3] = {

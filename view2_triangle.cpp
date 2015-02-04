@@ -15,8 +15,6 @@ static Render *render = NULL;
 
 int view2_triangle_initResources()
 {
-    glClearColor(1.0, 1.0, 1.0, 0);
-
     mesh = new Mesh();
 
     glm::vec4 triangle_vertices[3] = {
@@ -42,6 +40,7 @@ int view2_triangle_initResources()
 
 void view2TriangleDisplay()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     render->begin();

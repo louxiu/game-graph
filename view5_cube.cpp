@@ -15,6 +15,7 @@ static Render *render = NULL;
 
 void view5CubeDisplay()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // TODO: perspective internal
@@ -40,9 +41,6 @@ void view5CubeDisplay()
 
 int view5_cube_initResources()
 {
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(1.0, 1.0, 1.0, 0);
-
     mesh = new Mesh();
 
     glm::vec4 cube_vertices[8] = {

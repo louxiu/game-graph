@@ -15,6 +15,7 @@ static Render *render = NULL;
 
 void view3TriangleDisplay()
 {
+    glClearColor(1.0, 1.0, 1.0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
 
@@ -32,8 +33,6 @@ void view3TriangleDisplay()
 // TODO: pass vec4 to shader vec3
 int view3_triangle_initResources()
 {
-    glClearColor(1.0, 1.0, 1.0, 0);
-
     program = new Program("glsl/triangle.3.v.glsl",
                           "glsl/triangle.3.f.glsl");
 
