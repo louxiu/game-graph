@@ -9,7 +9,7 @@ Render::Render(Mesh *mesh, Program *program)
     this->blendDstFunc = GL_SRC_ALPHA;
     this->blendSrcFunc = GL_ONE_MINUS_SRC_ALPHA;
     this->cullfaceDisabled = false;
-    this->depthTestDisabled = false;
+    this->depthTestDisabled = true;
 }
 
 Render::~Render()
@@ -96,8 +96,6 @@ void Render::draw()
     }
 
     this->totalRenderCalls++;
-
-    // bind();
 
     /* Push each element in buffer_vertices to the vertex shader */
     mesh->render(*this->program);

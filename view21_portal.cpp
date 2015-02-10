@@ -1,5 +1,5 @@
 #include "view21_portal.h"
-#include "Mesh.h"
+#include "lib/Mesh.h"
 #include "global.h"
 #include "util.h"
 

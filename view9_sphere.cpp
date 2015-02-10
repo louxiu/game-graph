@@ -1,5 +1,5 @@
 #include "view9_sphere.h"
-#include "Mesh.h"
+#include "lib/Mesh.h"
 #include "util.h"
 #include "SOIL/SOIL.h"
 

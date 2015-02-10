@@ -1,6 +1,6 @@
 #include "view7_suzanne.h"
 
-#include "Mesh.h"
+#include "lib/Mesh.h"
 #include "util.h"
 
 GLuint view7_suzanne_program = 0;

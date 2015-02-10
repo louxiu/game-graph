@@ -66,26 +66,26 @@ void free_resources()
 }
 
 // g++ test.cpp Mesh.cpp Program.cpp -g -lGL -lglut -lGLEW -I../SOIL -I/usr/include/freetype2/ -L../SOIL -lm -lSOIL -lfreetype
-int main(int argc, char* argv[])
-{
-    glutInit(&argc, argv);
-    // glutInitContextVersion(2,0);
-    glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_DEPTH);
-    glutInitWindowSize(640, 480);
-    glutCreateWindow("My First Triangle");
+// int main(int argc, char* argv[])
+// {
+//     glutInit(&argc, argv);
+//     // glutInitContextVersion(2,0);
+//     glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_DEPTH);
+//     glutInitWindowSize(640, 480);
+//     glutCreateWindow("My First Triangle");
 
-    GLenum glew_status = glewInit();
-    if (glew_status != GLEW_OK) {
-        cerr << "Error: " << glewGetErrorString(glew_status) << endl;
-        return 1;
-    }
+//     GLenum glew_status = glewInit();
+//     if (glew_status != GLEW_OK) {
+//         cerr << "Error: " << glewGetErrorString(glew_status) << endl;
+//         return 1;
+//     }
 
-    if (init_resources()) {
-        glutDisplayFunc(onDisplay);
-        glutMainLoop();
-    }
+//     if (init_resources()) {
+//         glutDisplayFunc(onDisplay);
+//         glutMainLoop();
+//     }
 
-    free_resources();
+//     free_resources();
 
-    return 0;
-}
+//     return 0;
+// }

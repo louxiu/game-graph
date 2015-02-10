@@ -1,6 +1,6 @@
 #include "view11.h"
 
-#include "Mesh.h"
+#include "lib/Mesh.h"
 #include "util.h"
 #include "global.h"
 

@@ -138,6 +138,7 @@ int view6_cube_initResources()
 
     render = new Render(mesh, program);
     render->disableBlending();
+
     return 0;
 }
 

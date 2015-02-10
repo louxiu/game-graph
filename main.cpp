@@ -6,28 +6,28 @@
 #include <vector>
 #include <string>
 
-#include "Mesh.h"
+#include "lib/Mesh.h"
 #include "view1_triangle.h"
 #include "view2_triangle.h"
 #include "view3_triangle.h"
 #include "view4_triangle.h"
 #include "view5_cube.h"
 #include "view6_cube.h"
-#include "view7_suzanne.h"
-#include "view8.h"
-#include "view9_sphere.h"
-#include "view10_cube.h"
-#include "view11.h"
-#include "view12.h"
-#include "view13.h"
-#include "view14.h"
-#include "view15.h"
-#include "view16_teapot.h"
-#include "view17_cube.h"
-#include "view18.h"
-#include "view19.h"
-#include "view20_dice.h"
-#include "view21_portal.h"
+// #include "view7_suzanne.h"
+// #include "view8.h"
+// #include "view9_sphere.h"
+// #include "view10_cube.h"
+// #include "view11.h"
+// #include "view12.h"
+// #include "view13.h"
+// #include "view14.h"
+// #include "view15.h"
+// #include "view16_teapot.h"
+// #include "view17_cube.h"
+// #include "view18.h"
+// #include "view19.h"
+// #include "view20_dice.h"
+// #include "view21_portal.h"
 
 #include "global.h"
 #include "util.h"
@@ -241,21 +241,21 @@ int initWindow(int argc, char *argv[])
     view4_entry(&win_array[3]);
     view5_entry(&win_array[4]);
     view6_entry(&win_array[5]);
-    view7_entry(&win_array[6]);
-    view8_entry(&win_array[7]);
-    view9_entry(&win_array[8]);
-    view10_entry(&win_array[9]);
-    view11_entry(&win_array[10]);
-    view12_entry(&win_array[11]);
-    view13_entry(&win_array[12]);
-    view14_entry(&win_array[13]);
-    view15_entry(&win_array[14]);
-    view16_entry(&win_array[15]);
-    view17_entry(&win_array[16]);
-    view18_entry(&win_array[17]);
-    view19_entry(&win_array[18]);
-    view20_entry(&win_array[19]);
-    view21_entry(&win_array[20]);
+    // view7_entry(&win_array[6]);
+    // view8_entry(&win_array[7]);
+    // view9_entry(&win_array[8]);
+    // view10_entry(&win_array[9]);
+    // view11_entry(&win_array[10]);
+    // view12_entry(&win_array[11]);
+    // view13_entry(&win_array[12]);
+    // view14_entry(&win_array[13]);
+    // view15_entry(&win_array[14]);
+    // view16_entry(&win_array[15]);
+    // view17_entry(&win_array[16]);
+    // view18_entry(&win_array[17]);
+    // view19_entry(&win_array[18]);
+    // view20_entry(&win_array[19]);
+    // view21_entry(&win_array[20]);
 
     for(int i = 0; i < SUB_WINDOW_COL * SUB_WINDOW_ROW; ++i){
         if (win_array[i].init == NULL){

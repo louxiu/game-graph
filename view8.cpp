@@ -1,6 +1,6 @@
 #include "view8.h"
 
-#include "Mesh.h"
+#include "lib/Mesh.h"
 #include "util.h"
 
 #include <ft2build.h>
