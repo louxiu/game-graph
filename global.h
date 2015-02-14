@@ -10,8 +10,6 @@ extern const GLuint SUB_WINDOW_COL, SUB_WINDOW_ROW,
 
 extern const GLuint MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT;
 
-extern GLfloat fps;
-
 struct demo {
     const char* texture_filename;
     const char* vshader_filename;

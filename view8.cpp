@@ -5,7 +5,6 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-
 GLuint view8_program = 0;
 GLint view8_attribute_coord = -1, view8_uniform_tex = -1, view8_uniform_color = -1;
 
@@ -160,8 +159,40 @@ int view8_initResources()
     return 0;
 }
 
+static float fps = 10.0;
+static unsigned int fps_frames = 0;
+
+#ifdef USE_BOOST
+#include <boost/timer.hpp>
+using namespace boost;
+timer t;
+#else
+static unsigned int fps_start = 0;
+#endif /* USE_BOOST */
+
 void view8Display()
 {
+    fps_frames++;
+
+#ifdef USE_BOOST
+	float delta_t = t.elapsed();
+	cout << t.elapsed() << " " << fps_frames << endl;
+	if (delta_t > 1){
+		fps = fps_frames * 1.0 / delta_t;
+		fps_frames = 0;
+		t.restart();
+	}
+#else
+    /* FPS count */
+    int delta_t = glutGet(GLUT_ELAPSED_TIME) - fps_start;
+    if (delta_t > 1000) {
+        // cout << "fps: "<< 1000.0 * fps_frames / delta_t << endl;
+        fps = 1000.0 * fps_frames / delta_t;
+        fps_frames = 0;
+        fps_start = glutGet(GLUT_ELAPSED_TIME);
+    }
+#endif
+
 	float sx = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
 	float sy = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
 
@@ -208,7 +239,6 @@ void view8_entry(Window *window)
 }
 
 #ifdef TEST_ALONE
-float fps = 10.0;
 int main(int argc, char *argv[])
 {
     Window window;
