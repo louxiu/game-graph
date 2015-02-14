@@ -166,6 +166,7 @@ static unsigned int fps_frames = 0;
 #include <boost/timer.hpp>
 using namespace boost;
 timer t;
+// https://svn.boost.org/trac/boost/ticket/1962
 #else
 static unsigned int fps_start = 0;
 #endif /* USE_BOOST */
