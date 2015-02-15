@@ -39,7 +39,7 @@ view7 : view7_suzanne.cpp util.o lib/Mesh.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
 view8 : view8.cpp util.o lib/Mesh.o
-	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE -DUSE_BOOST
+	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
 view9 : view9_sphere.cpp util.o lib/Mesh.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
