@@ -29,19 +29,35 @@
   export DISPLAY=:0
 
 * screenshot
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/main.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view7.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view8.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view9.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view10.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view11.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view12.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view13.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view14.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view15.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view16.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view17.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view18.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view19.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view20.png)
-![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view21.png)
+  1. view1~6
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/main.png)
+  7. view7
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view7.png)
+  8. view8
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view8.png)
+  9. view9
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view9.png)
+  10. view10
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view10.png)
+  11. view11
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view11.png)
+  12. view12
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view12.png)
+  13. view13
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view13.png)
+  14. view14
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view14.png)
+  15. view15
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view15.png)
+  16. view16
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view16.png)
+  17. view17
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view17.png)
+  18. view18
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view18.png)
+  19. view19
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view19.png)
+  20. view20
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view20.png)
+  21. view21
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view21.png)
