@@ -28,4 +28,20 @@
 * start gui program to desktop from command line
   export DISPLAY=:0
 
+* screenshot
 ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/main.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view7.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view8.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view9.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view10.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view11.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view12.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view13.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view14.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view15.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view16.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view17.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view18.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view19.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view20.png)
+![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view21.png)
