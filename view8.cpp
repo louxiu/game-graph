@@ -171,6 +171,8 @@ timer t;
 static unsigned int fps_start = 0;
 #endif /* USE_BOOST */
 
+// different between fps and frame time. any matters?
+// http://en.wikibooks.org/wiki/OpenGL_Programming/Performance
 void view8Display()
 {
     fps_frames++;
