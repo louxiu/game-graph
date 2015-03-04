@@ -80,10 +80,16 @@ view20 : view20_dice.cpp util.o lib/Mesh.o
 view21 : view21_portal.cpp util.o lib/Mesh.o
 	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
 
+view22 : view22_glecraft.cpp util.o
+	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
+
+view23 : view23_pcd.cpp util.o
+	g++ -o $@ $^ $(FLAGS) -DTEST_ALONE
+
 clean :
 	rm -f *.o main view1 view2 view3 view4 view5 view6 view7 view8 view9 view10
 	rm -f *.o view11 view12 view13 view14 view15 view16 view17 view18
-	rm -f *.o view19 view20 view21
+	rm -f *.o view19 view20 view21 view22 view23
 	rm -f engine/a.out
 
 .PHONY: clean

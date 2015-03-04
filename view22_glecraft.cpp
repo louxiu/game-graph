@@ -1,17 +1,23 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+
+#include <GL/glew.h>
+#include <GL/glut.h>
+
+#ifndef GLM_GTC_noise
+#define GLM_GTC_noise GLM_VERSION
+#endif
+
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/noise.hpp>
 
 #include "view22_glecraft.h"
 #include "util.h"
-
-#include "engine/Mesh.h"
-#include "engine/Program.h"
-#include "engine/Render.h"
-
-static Program *program = NULL;
-static Mesh *mesh = NULL;
-static Render *render = NULL;
 
 void view22_entry(Window *window)
 {

@@ -1,8 +1,5 @@
 #include "view11.h"
-
-#include "lib/Mesh.h"
 #include "util.h"
-#include "global.h"
 
 #include "data/view11_res_texture.c"
 
