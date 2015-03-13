@@ -62,4 +62,4 @@
   21. view21 portal
   ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view21.png)
   22. view23 point cloud
-  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view21.png)
+  ![ScreenShot](https://raw.githubusercontent.com/louxiu/game-graph/master/data/view23_pcd5.png)
