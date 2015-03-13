@@ -35,6 +35,12 @@ int view1_triangle_initResources()
         glm::vec4(0.8, -0.8, 0.0, 1.0)
     };
 
+    // glm::vec4 triangle_vertices[3] = {
+    //     glm::vec4(0.0, 1.0, 0.0, 1.0),
+    //     glm::vec4(-1.0, -1.0, 0.0, 1.0),
+    //     glm::vec4(1.0, -1.0, 0.0, 1.0)
+    // };
+
     for(int i = 0; i < sizeof(triangle_vertices); ++i){
         mesh->vertices.push_back(triangle_vertices[i]);
     }
